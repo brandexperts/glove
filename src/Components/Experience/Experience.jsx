@@ -47,20 +47,20 @@ if (steps === 0) {
     x : 0.1463215900227963,
     y  : 1.1355854332999282,
     z : 2.772911054464297,
-    duration : 0.4,
-    ease: "back.out(4)",
+    duration : 0.3,
+    ease: "back.out(2)",
   })
 } else if (steps === 1) {
   gsap.to(camera.position, {
     x: -2.7614849528628094, y: 0.8646174875717527, z: -0.7916043552794885,
-    duration : 0.4,
-    ease: "back.out(4)",
+    duration : 0.3,
+    ease: "back.out(2)",
   })
 } else if(steps === 2){
   gsap.to(camera.position, {
     x: 0.04226162418145372, y: -0.5998061671447844, z: 2.9391234266319426,
-    duration : 0.4,
-    ease: "back.out(4)",
+    duration : 0.3,
+    ease: "back.out(2)",
   })
 }
 
