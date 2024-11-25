@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+
+
+#root{
+  width: 100vw;
+  height : 100vh;
+}
+body{
+  width: 100%;
+  height : 100%;
+  background: linear-gradient(to top, #f4f7f9 20%, #d5e1e7 40%, #dfe8ed);
+}
+
+
+
+
+.webgl-canvas{
+  height: 100vh;
+  width: 100vw;
+}
+
+
+@tailwind utilities;

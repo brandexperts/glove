@@ -1,0 +1,17 @@
+#gnext {
+    padding: 7px 10px 7px 10px;
+    border-radius: 0 3px 3px 0;
+    background-color: #7ccb00;
+    background: radial-gradient(circle, #7ccb00 25%, #4dc000);
+    color: #fff;
+}
+
+#gprev { 
+    color:#1098fa;
+    border-radius: 3px 3px 3px 3px;
+    border: 1px solid #0a83da;
+    box-sizing: border-box;
+    padding: 7px 7px 7px 10px;
+    line-height: 14px;
+    background-color: rgba(255, 255, 255, 0.25);
+}
