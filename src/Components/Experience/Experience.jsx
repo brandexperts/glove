@@ -63,6 +63,14 @@ if (steps === 0) {
     duration : 0.3,
     ease: "back.out(2)",
   })
+} else if(steps === 3){
+  gsap.to(camera.position, {
+    x : 0.1463215900227963,
+    y  : 0.7355854332999282,
+    z : 2.772911054464297,
+    duration : 0.3,
+    ease: "back.out(2)",
+  })
 }
 
 

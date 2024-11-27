@@ -6,7 +6,7 @@ const useConfigSteps = create((set) => ({
   steps: 0,
   increaseSteps: () =>
     set((state) => {
-      if ( state.steps <= 1) {
+      if ( state.steps <= 2) {
         return { steps: state.steps + 1 };
       }
       return state; // No change
@@ -28,10 +28,16 @@ const useMaterialStore = create((set) => ({
   setMetallic: (isMetallic) => set({ isMetallic }),
 }));
 
+const useFistLogo = create((set) => ({
+  src: "./color-options/boxing-logos/boxing_logo_white.png",
+  setSrc: (src) => set({ src }),
+}));
+
 
 
 const EditUI = () => {
   const [isMetallic, setIsMetallic] = useState(true); // Toggle Metallic/Matte
+  const { src, setSrc } = useFistLogo(); // Access Zustand store
   const steps = useConfigSteps((state) => state.steps);
   const increaseSteps = useConfigSteps((state) => state.increaseSteps);
   const { setColor, setMetallic } = useMaterialStore();
@@ -56,7 +62,18 @@ const EditUI = () => {
       selection: "Select Color",
       img: "./color-options/steps/st3.jpg",
     },
+    {
+      step: 4,
+      title: "Fist Logo",
+      selection: "Select Logo",
+      img: "./color-options/steps/st1.jpg",
+    },
   ];
+
+
+
+
+
 
   const colors = [
     {
@@ -89,16 +106,40 @@ const EditUI = () => {
     },
   ];
 
+
+  const logosContent = [
+    {
+      name : "Negro Clasico",
+      src : "./color-options/boxing-logos/boxing_logo.png"
+    },
+    {
+      name : "Blanco Clasico",
+      src : "./color-options/boxing-logos/boxing_logo_white.png"
+    },
+    {
+      name : "Viva Mexico",
+      src : "./color-options/boxing-logos/boxing_logo_color.png"
+    },
+  ]
+
+
+
+
+
+
   const handleColorClick = (color, isMetallic) => {
     setColor(color);
     setMetallic(isMetallic);
+  };
 
 
-
+  const handleSrcClick = (logoSrc) => {
+    setSrc(logoSrc); // Update Zustand state
+    console.log(logoSrc);
   };
 
   return (
-    <div className="customize w-[25rem] h-[20rem] absolute left-6 top-1/2 -translate-y-1/2 bg-[#ffffff] rounded-lg shadow-md p-4">
+    <div className="customize w-[25rem] h-[20rem] absolute left-6 top-1/2 -translate-y-1/2 bg-[#ffffff] flex flex-col justify-between rounded-lg shadow-md p-4">
       {/* Glove Details Header */}
       <div className="flex gap-2 justify-center items-center">
         <div className="text-center mb-4">
@@ -114,46 +155,69 @@ const EditUI = () => {
         </div>
       </div>
 
-      {/* Color Options */}
-      <div className="flex items-center justify-between">
-        {/* Color Tabs */}
-        <div className="flex flex-col gap-2 w-full ml-4">
-          <div className="flex justify-evenly my-3 text-sm">
-            <button
-              className={`px-2 py-1 w-1/2 shadow-lg bg-white border text-lg font-semibold rounded-sm ${
-                isMetallic ? "text-blue-600" : "text-gray-500"
-              }`}
-              onClick={() => setIsMetallic(true)}
-            >
-              METALLIC
-            </button>
-            <button
-              className={`px-2 py-1 w-1/2 shadow-lg bg-white border text-lg font-semibold rounded-sm ${
-                !isMetallic ? "text-blue-600" : "text-gray-500"
-              }`}
-             
-              onClick={() => setIsMetallic(false)}
-            >
-              MATTE
-            </button>
-          </div>
 
-          {/* Swatches */}
-          <div className={`flex flex-wrap gap-1 ${isMetallic ? "metallic-options" : "matte-options"}`}>
-            {colors[0][isMetallic ? "Metallic" : "Matte"].map((color, index) => (
-              <div
-                key={index}
-                className="w-9 h-9 shadow-lg border cursor-pointer"
-                style={{
-                  backgroundColor: isMetallic ? undefined : color.color,
-                  backgroundImage: isMetallic ? `url(${color.src})` : undefined,
-                }}
-                onClick={() => handleColorClick(color.color, color.isMetallic)}
-              ></div>
-            ))}
-          </div>
-        </div>
+{/* Palm Logo Options  */}
+
+
+
+{steps === 3 && (
+  <div className="flex justify-evenly bg-slate-700 py-10 rounded-xl items-center">
+    {logosContent.map((logo, index) => (
+      <img
+        key={index}
+        className="w-24 cursor-pointer"
+        src={logo.src}
+        onClick={() => handleSrcClick(logo.src)}
+        alt={`Logo ${index}`}
+      />
+    ))}
+  </div>
+)}
+
+ 
+
+
+{steps !== 3 && (
+  <div className="flex items-center justify-between">
+    {/* Color Tabs */}
+    <div className="flex flex-col gap-2 w-full ml-4">
+      <div className="flex justify-evenly my-3 text-sm">
+        <button
+          className={`px-2 py-1 w-1/2 shadow-lg bg-white border text-lg font-semibold rounded-sm ${
+            isMetallic ? "text-blue-600" : "text-gray-500"
+          }`}
+          onClick={() => setIsMetallic(true)}
+        >
+          METALLIC
+        </button>
+        <button
+          className={`px-2 py-1 w-1/2 shadow-lg bg-white border text-lg font-semibold rounded-sm ${
+            !isMetallic ? "text-blue-600" : "text-gray-500"
+          }`}
+          onClick={() => setIsMetallic(false)}
+        >
+          MATTE
+        </button>
       </div>
+
+      {/* Swatches */}
+      <div className={`flex flex-wrap gap-1 ${isMetallic ? "metallic-options" : "matte-options"}`}>
+        {colors[0][isMetallic ? "Metallic" : "Matte"].map((color, index) => (
+          <div
+            key={index}
+            className="w-9 h-9 shadow-lg border cursor-pointer"
+            style={{
+              backgroundColor: isMetallic ? undefined : color.color,
+              backgroundImage: isMetallic ? `url(${color.src})` : undefined,
+            }}
+            onClick={() => handleColorClick(color.color, color.isMetallic)}
+          ></div>
+        ))}
+      </div>
+    </div>
+  </div>
+)}
+
 
       {/* Navigation Buttons */}
       <div className="flex justify-between mt-4">
@@ -176,4 +240,4 @@ const EditUI = () => {
   );
 };
 
-export {EditUI , useMaterialStore , useConfigSteps}
+export {EditUI , useMaterialStore , useConfigSteps, useFistLogo}

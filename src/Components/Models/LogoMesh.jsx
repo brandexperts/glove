@@ -1,24 +1,33 @@
 import React, { useEffect, useRef } from 'react';
 import { useGLTF, useTexture } from '@react-three/drei';
-
+import { useFistLogo, useConfigSteps} from "../UI/EditUI"
 export default function LogoMesh(props) {
   const { nodes, materials } = useGLTF('./models/logo_mesh.glb');
 
   const logoRef = useRef(null);
-  const secondlogo = useTexture('./color-options/boxing-logos/boxing_logo_white.png');
+  const steps = useConfigSteps((state)=> state.steps)
+  const src = useFistLogo((state)=> state.src)
 
+
+
+  const secondlogo = useTexture(src);
+
+  
   useEffect(() => {
-    if (logoRef.current && secondlogo) {
-      // Ensure the texture is not flipped vertically
-      secondlogo.flipY = false;
-      secondlogo.needsUpdate = true;
+      if (logoRef.current && secondlogo) {
+          // Ensure the texture is not flipped vertically
+          secondlogo.flipY = false;
+          secondlogo.needsUpdate = true;
+          
+          // Assign the texture to the material's map
+          const material = logoRef.current.material;
+          material.map = secondlogo;
+          material.needsUpdate = true; // Ensure material updates
 
-      // Assign the texture to the material's map
-      const material = logoRef.current.material;
-      material.map = secondlogo;
-      material.needsUpdate = true; // Ensure material updates
+          
+          console.log(src)
     }
-  }, [secondlogo]);
+  }, [secondlogo, src]);
 
   return (
     <group {...props} dispose={null}>
