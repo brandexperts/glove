@@ -32,9 +32,9 @@ const Scene = () => {
 
   const steps = useConfigSteps((state) => state.steps)
 
-  // useFrame((state) => {
-  //   console.log(state.camera.position) // Access the camera here safely
-  // })
+  useFrame((state) => {
+    console.log(state.camera.position) // Access the camera here safely
+  })
 
   const scene = useThree()
 const camera = scene.camera
@@ -63,11 +63,52 @@ if (steps === 0) {
     duration : 0.3,
     ease: "back.out(2)",
   })
-} else if(steps === 3){
+} 
+else if(steps === 3){
   gsap.to(camera.position, {
     x : 0.1463215900227963,
     y  : 0.7355854332999282,
     z : 2.772911054464297,
+    duration : 0.3,
+    ease: "back.out(2)",
+  })
+}
+
+else if(steps === 4){
+  gsap.to(camera.position, {
+    x: 0.13619212680748027, y: -0.2150213966914702, z: -2.989183417517317,
+    duration : 0.3,
+    ease: "back.out(2)",
+  })
+}
+
+else if(steps === 5){
+  gsap.to(camera.position, {
+    x: 1.93689052298686, y: -0.0768010096043191, z: -2.289663011643295,
+    duration : 0.3,
+    ease: "back.out(2)",
+  })
+}
+
+else if(steps === 6){
+  gsap.to(camera.position, {
+    x: 1.1972580361020264, y: 0.5949852808588245, z: -2.6856220341944006,
+    duration : 0.3,
+    ease: "back.out(2)",
+  })
+}
+
+else if(steps === 7){
+  gsap.to(camera.position, {
+    x: 0.4427808940390892, y: -0.5764321738938014, z: -2.910613514153683,
+    duration : 0.3,
+    ease: "back.out(2)",
+  })
+}
+
+else if(steps === 8){
+  gsap.to(camera.position, {
+    x: 0.3649433112594433, y: 0.19623266149409252, z: -2.9712475231307516,
     duration : 0.3,
     ease: "back.out(2)",
   })

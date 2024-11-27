@@ -6,7 +6,7 @@ const useConfigSteps = create((set) => ({
   steps: 0,
   increaseSteps: () =>
     set((state) => {
-      if ( state.steps <= 2) {
+      if ( state.steps <= 7) {
         return { steps: state.steps + 1 };
       }
       return state; // No change
@@ -67,6 +67,36 @@ const EditUI = () => {
       title: "Fist Logo",
       selection: "Select Logo",
       img: "./color-options/steps/st1.jpg",
+    },
+    {
+      step: 5,
+      title: "Internal Palm and Wrist",
+      selection: "Select Color",
+      img: "./color-options/steps/st5.jpg",
+    },
+    {
+      step: 6,
+      title: "Inside Part of Thumb",
+      selection: "Select Color",
+      img: "./color-options/steps/st6.jpg",
+    },
+    {
+      step: 7,
+      title: "Inner Thumb Cover",
+      selection: "Select Color",
+      img: "./color-options/steps/st6.jpg",
+    },
+    {
+      step: 8,
+      title: "Trim",
+      selection: "Select Color",
+      img: "./color-options/steps/st7.jpg",
+    },
+    {
+      step: 9,
+      title: "Laces Color",
+      selection: "Select Color",
+      img: "./color-options/steps/st7.jpg",
     },
   ];
 

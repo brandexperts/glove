@@ -29,6 +29,11 @@ const isMetallic = useMaterialStore((state)=> state.isMetallic)
 const fistRef = useRef()
 const thumbRef = useRef()
 const wristRef = useRef()
+const PalmWristRef = useRef()
+const insideThumbRef = useRef()
+const trimRef = useRef()
+const lacesRef = useRef()
+const thumbConnectRef = useRef()
 
 
 useEffect(()=>{
@@ -49,6 +54,28 @@ useEffect(()=>{
     wristRef.current.material.color = new Color(color)
     wristRef.current.material.roughness = isMetallic ? 0.2 : 0.4
     wristRef.current.material.metalness = isMetallic ? 0.8 : 0.0
+  } else if (steps === 4) {
+    PalmWristRef.current.material.color = new Color(color)
+    PalmWristRef.current.material.roughness = isMetallic ? 0.2 : 0.4
+    PalmWristRef.current.material.metalness = isMetallic ? 0.8 : 0.0
+  } else if (steps === 5) {
+    insideThumbRef.current.material.color = new Color(color)
+    insideThumbRef.current.material.roughness = isMetallic ? 0.2 : 0.4
+    insideThumbRef.current.material.metalness = isMetallic ? 0.8 : 0.0
+  } else if (steps === 6) {
+    thumbConnectRef.current.material.color = new Color(color)
+    thumbConnectRef.current.material.roughness = isMetallic ? 0.2 : 0.4
+    thumbConnectRef.current.material.metalness = isMetallic ? 0.8 : 0.0
+  } 
+  
+  else if (steps === 7) {
+    trimRef.current.material.color = new Color(color)
+    trimRef.current.material.roughness = isMetallic ? 0.2 : 0.4
+    trimRef.current.material.metalness = isMetallic ? 0.8 : 0.0
+  } else if (steps === 8) {
+    lacesRef.current.material.color = new Color(color)
+    lacesRef.current.material.roughness = isMetallic ? 0.2 : 0.4
+    lacesRef.current.material.metalness = isMetallic ? 0.8 : 0.0
   }
 
 
@@ -83,6 +110,39 @@ const restMat = useMemo(() => {
     normalMap: normalMap,
   });
 }, [normalMap]);
+
+const PalmWristMat = useMemo(() => {
+  return new MeshStandardMaterial({
+    normalMap: normalMap,
+  });
+}, [normalMap]);
+
+const insideThumbMat = useMemo(() => {
+  return new MeshStandardMaterial({
+    normalMap: normalMap,
+  });
+}, [normalMap]);
+
+
+const trimMat = useMemo(() => {
+  return new MeshStandardMaterial({
+    normalMap: normalMap,
+  });
+}, [normalMap]);
+
+const lacesMat = useMemo(() => {
+  return new MeshStandardMaterial({
+    normalMap: normalMap,
+  });
+}, [normalMap]);
+
+
+const thumbConnectMat = useMemo(() => {
+  return new MeshStandardMaterial({
+    normalMap: normalMap,
+  });
+}, [normalMap]);
+
 
 
 
@@ -122,7 +182,8 @@ const restMat = useMemo(() => {
         castShadow
         receiveShadow
         geometry={nodes.piping.geometry}
-        material={restMat}
+        material={trimMat}
+        ref={trimRef}
         position={[0.002, -0.601, 0.1]}
       />
       <mesh
@@ -136,7 +197,7 @@ const restMat = useMemo(() => {
         castShadow
         receiveShadow
         geometry={nodes.tstrip.geometry}
-        material={restMat}
+        material={thumbConnectMat}
         position={[0, 0, 0.209]}
       />
       <group position={[0, 0.097, 0.173]}>
@@ -144,7 +205,8 @@ const restMat = useMemo(() => {
           castShadow
           receiveShadow
           geometry={nodes.Mesh_15.geometry}
-          material={restMat}
+          ref={PalmWristRef}
+          material={PalmWristMat}
         />
         <mesh
           castShadow
@@ -157,14 +219,16 @@ const restMat = useMemo(() => {
         castShadow
         receiveShadow
         geometry={nodes.connect.geometry}
-        material={materials['Material.010']}
+        material={thumbConnectMat}
+        ref={thumbConnectRef}
         position={[-0.621, 1.295, -0.279]}
       />
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.thumbin.geometry}
-        material={restMat}
+        material={insideThumbMat}
+        ref={insideThumbRef}
         position={[-0.426, 0.593, -0.2]}
       />
       <mesh
@@ -181,14 +245,15 @@ const restMat = useMemo(() => {
         castShadow
         receiveShadow
         geometry={nodes.Lace_left.geometry}
-        material={materials.Lace}
+        material={lacesMat}
+        ref={lacesRef}
         position={[0.01, -0.76, -0.201]}
       />
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.Lace_right.geometry}
-        material={materials.Lace}
+        material={lacesMat}
         position={[0.01, -0.76, -0.201]}
         rotation={[-Math.PI, 0, 0]}
         scale={-1}
