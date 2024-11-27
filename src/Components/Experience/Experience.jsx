@@ -7,6 +7,7 @@ import { useConfigSteps } from '../UI/EditUI'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { useControls } from 'leva'
+import LogoMesh from '../Models/LogoMesh'
 
 const Experience = () => {
 
@@ -82,6 +83,7 @@ const ringModel = useGLTF("./models/cartoon_boxing_ring.glb")
     <>
       <Stage>
         <Glove />
+        <LogoMesh/>
       </Stage>
 
 
@@ -101,7 +103,7 @@ const ringModel = useGLTF("./models/cartoon_boxing_ring.glb")
       />
       <pointLight position={[0, 1, 0]} intensity={0.8} />
 
-      <OrbitControls minDistance={3} maxDistance={10} />
+      <OrbitControls minDistance={3} maxDistance={10} maxPolarAngle={Math.PI / 2 + 0.23}/>
     </>
   )
 }
