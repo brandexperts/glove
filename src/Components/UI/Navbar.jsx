@@ -16,7 +16,7 @@ const Navbar = () => {
 </div>
 
 <div className=' flex items-center text-[2vw] font-bold italic text-slate-800'>
-    Edit Your Glove
+    Edit Your Glove <br>BETA</br>
 </div>
 
 
