@@ -262,7 +262,7 @@ const thumbConnectMat = useMemo(() => {
         castShadow
         receiveShadow
         geometry={nodes.madeforchampions.geometry}
-        material={materials.Champ}
+        material={wristMat}
         position={[0.008, -0.942, 0.559]}
         rotation={[Math.PI / 2, 0, 0]}
         scale={0.564}
