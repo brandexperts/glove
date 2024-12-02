@@ -7,15 +7,17 @@ import { useGLTF, useTexture } from '@react-three/drei'
 import { Color, MeshStandardMaterial } from 'three';
 import {useMaterialStore, useConfigSteps} from "../UI/EditUI"
 import * as THREE from "three"
+import { useCanvasColor } from '../Experience/KonvaCanvas';
 
 export default function Glove(props) {
-  const { nodes, materials } = useGLTF('./models/glove_uv.glb')
+  const { nodes, materials } = useGLTF('./models/glove_text_area.glb')
 
 
 const normalMap = useTexture("./textures/nleather5.png")
 
 const palmbackNormal = useTexture("./textures/nleather5.png")
 
+const { setCanvasColor } = useCanvasColor();
 
 // palmbackNormal.repeat.set(5,5)
 
@@ -27,6 +29,7 @@ const isMetallic = useMaterialStore((state)=> state.isMetallic)
 
 
 const fistRef = useRef()
+const fistTextRef = useRef()
 const thumbRef = useRef()
 const wristRef = useRef()
 const PalmWristRef = useRef()
@@ -34,26 +37,67 @@ const insideThumbRef = useRef()
 const trimRef = useRef()
 const lacesRef = useRef()
 const thumbConnectRef = useRef()
+const MadeForChampionsRef = useRef()
+
+
+
+
+
+let canvas = Array.from(document.getElementsByTagName("canvas"))[0],
+ctx,
+texture;
+
+// console.log(canvas)
+
+ctx = canvas.getContext("2d");
+ctx.globalCompositeOperation = 'source-over';
+texture = new THREE.CanvasTexture(ctx.canvas);
+texture.flipY = false;
+texture.format = THREE.RGBAFormat
+texture.colorSpace = THREE.SRGBColorSpace
+
+
+
+
+// const palmTextAreaMat = useMemo(() => {
+//   return new MeshStandardMaterial({
+//     normalMap: palmbackNormal,
+//     map : texture,
+//   });
+// }, [palmbackNormal, fistRef.current.material.color]);
+
+
 
 
 useEffect(()=>{
   
+  console.log(MadeForChampionsRef)
+  
   palmbackNormal.wrapS = THREE.RepeatWrapping;
-		palmbackNormal.WrapT = THREE.RepeatWrapping;
-		palmbackNormal.needsUpdate = true;
-
+    palmbackNormal.WrapT = THREE.RepeatWrapping;
+    palmbackNormal.needsUpdate = true;
   if (steps === 0) {
     fistRef.current.material.color = new Color(color)
     fistRef.current.material.roughness = isMetallic ? 0.2 : 0.4
     fistRef.current.material.metalness = isMetallic ? 0.8 : 0.0
+    texture.needsUpdate =true;
+    setCanvasColor(color)
+    fistRef.current.material.needsUpdate = true;
+
   } else if( steps === 1){
     thumbRef.current.material.color = new Color(color)
     thumbRef.current.material.roughness = isMetallic ? 0.2 : 0.4
     thumbRef.current.material.metalness = isMetallic ? 0.8 : 0.0
   } else if (steps === 2) {
     wristRef.current.material.color = new Color(color)
+    MadeForChampionsRef.current.material.color = new Color(color)
+    MadeForChampionsRef.current.material.metalness = 0.5
+    MadeForChampionsRef.current.material.roughness = 0.9
+    console.log(MadeForChampionsRef)
+    wristRef.current.material.color = new Color(color)
     wristRef.current.material.roughness = isMetallic ? 0.2 : 0.4
     wristRef.current.material.metalness = isMetallic ? 0.8 : 0.0
+
   } else if (steps === 4) {
     PalmWristRef.current.material.color = new Color(color)
     PalmWristRef.current.material.roughness = isMetallic ? 0.2 : 0.4
@@ -87,11 +131,13 @@ useEffect(()=>{
 
 
 
-const palmbackMat = useMemo(() => {
-  return new MeshStandardMaterial({
-    normalMap: palmbackNormal,
-  });
-}, [palmbackNormal]);
+  // Memoized material to avoid unnecessary re-creations
+  const palmbackMat = useMemo(() => {
+    return new MeshStandardMaterial({
+      normalMap: palmbackNormal,
+      // map: texture,
+    });
+  }, [palmbackNormal]);
 
 const thumboutMat = useMemo(() => {
   return new MeshStandardMaterial({
@@ -105,11 +151,6 @@ const wristbackMat = useMemo(() => {
   });
 }, [normalMap]);
 
-const restMat = useMemo(() => {
-  return new MeshStandardMaterial({
-    normalMap: normalMap,
-  });
-}, [normalMap]);
 
 const PalmWristMat = useMemo(() => {
   return new MeshStandardMaterial({
@@ -146,6 +187,13 @@ const thumbConnectMat = useMemo(() => {
 
 
 
+// Text Area Canvas 
+
+
+
+// useEffect(()=>{
+//   texture.needsUpdate = true;
+// }, [palmbackNormal, color])
 
 {/* <meshStandardMaterial normalMap={normalMap} roughness={0.2} metalness={0.8} color={"#EB1F00"}/> */}
   return (
@@ -263,6 +311,7 @@ const thumbConnectMat = useMemo(() => {
         receiveShadow
         geometry={nodes.madeforchampions.geometry}
         material={materials.Champ}
+        ref={MadeForChampionsRef}
         position={[0.008, -0.942, 0.559]}
         rotation={[Math.PI / 2, 0, 0]}
         scale={0.564}
@@ -285,8 +334,16 @@ const thumbConnectMat = useMemo(() => {
         rotation={[Math.PI / 2, 0, 0]}
         scale={[0.334, 0.648, 0.067]}
       />
+      {/* <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.textarea.geometry}
+        ref={fistTextRef}
+        material={palmTextAreaMat}
+        position={[0, 0.141, 0.173]}
+      /> */}
     </group>
   )
 }
 
-useGLTF.preload('./models/glove_uv.glb')
+useGLTF.preload('./models/glove_text_area.glb')

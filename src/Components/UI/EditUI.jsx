@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { create } from "zustand";
+import MadeForChampionsUI from "./MadeForChampionsUI";
 
 // Zustand stores
 const useConfigSteps = create((set) => ({
@@ -169,7 +170,7 @@ const EditUI = () => {
   };
 
   return (
-    <div className="customize w-[25rem] h-[20rem] absolute left-6 top-1/2 -translate-y-1/2 bg-[#ffffff] flex flex-col justify-between rounded-lg shadow-md p-4">
+    <div className="customize w-[25rem] h-[auto] absolute left-6 top-1/2 -translate-y-1/2 bg-[#ffffff] flex flex-col justify-between rounded-lg shadow-md p-4">
       {/* Glove Details Header */}
       <div className="flex gap-2 justify-center items-center">
         <div className="text-center mb-4">
@@ -247,6 +248,10 @@ const EditUI = () => {
     </div>
   </div>
 )}
+
+
+{/* <MadeForChampionsUI/> */}
+
 
 
       {/* Navigation Buttons */}

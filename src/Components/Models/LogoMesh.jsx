@@ -25,7 +25,7 @@ export default function LogoMesh(props) {
           material.needsUpdate = true; // Ensure material updates
 
           
-          console.log(src)
+          // console.log(src)
     }
   }, [secondlogo, src]);
 

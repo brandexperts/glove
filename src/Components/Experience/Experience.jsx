@@ -8,11 +8,16 @@ import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { useControls } from 'leva'
 import LogoMesh from '../Models/LogoMesh'
-
+import {KonvaCanvas} from './KonvaCanvas'
+import { Stage as KonvaStage, Layer, Rect } from 'react-konva'
 const Experience = () => {
 
 
   return (
+    <>
+
+<KonvaCanvas/>
+
     <Canvas
       className="webgl-canvas"
       shadows
@@ -22,9 +27,10 @@ const Experience = () => {
         logarithmicDepthBuffer: true,
         antialias : true,
       }}
-    >
+      >
       <Scene />
     </Canvas>
+      </>
   )
 }
 
@@ -32,9 +38,9 @@ const Scene = () => {
 
   const steps = useConfigSteps((state) => state.steps)
 
-  useFrame((state) => {
-    console.log(state.camera.position) // Access the camera here safely
-  })
+  // useFrame((state) => {
+  //   console.log(state.camera.position) // Access the camera here safely
+  // })
 
   const scene = useThree()
 const camera = scene.camera
@@ -117,12 +123,6 @@ else if(steps === 8){
 
 
   }, [steps])
-
-// const groundControls = useControls("Ground Controls" , {
-//   scale : 1,
-//   radius : 1,
-//   height : 1,
-// })
 
 
 const ringModel = useGLTF("./models/cartoon_boxing_ring.glb")
