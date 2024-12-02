@@ -90,13 +90,24 @@ useEffect(()=>{
     thumbRef.current.material.metalness = isMetallic ? 0.8 : 0.0
   } else if (steps === 2) {
     wristRef.current.material.color = new Color(color)
-    MadeForChampionsRef.current.material.color = new Color(color)
-    MadeForChampionsRef.current.material.metalness = 0.5
-    MadeForChampionsRef.current.material.roughness = 0.9
-    console.log(MadeForChampionsRef)
+
+    let mfc = MadeForChampionsRef.current.material
+
+    mfc.color = new Color(color)
+    mfc.metalness = 0.5
+    mfc.roughness = 0.9
+ 
     wristRef.current.material.color = new Color(color)
     wristRef.current.material.roughness = isMetallic ? 0.2 : 0.4
     wristRef.current.material.metalness = isMetallic ? 0.8 : 0.0
+
+    const matteBlack = new Color(0x000000);
+    
+    if (wristRef.current.material.color.equals(matteBlack)) {
+      mfc.color = new Color("#3f403f")
+    }
+
+
 
   } else if (steps === 4) {
     PalmWristRef.current.material.color = new Color(color)
