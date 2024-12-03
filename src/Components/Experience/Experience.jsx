@@ -9,7 +9,7 @@ import gsap from 'gsap'
 import { useControls } from 'leva'
 import LogoMesh from '../Models/LogoMesh'
 import {KonvaCanvas} from './KonvaCanvas'
-import { Stage as KonvaStage, Layer, Rect } from 'react-konva'
+import { useStore } from '../UI/BGToggleUI'
 const Experience = () => {
 
 
@@ -128,6 +128,8 @@ else if(steps === 8){
 const ringModel = useGLTF("./models/cartoon_boxing_ring.glb")
 
 
+const { isChecked } = useStore();
+
   return (
     <>
       <Stage>
@@ -136,7 +138,7 @@ const ringModel = useGLTF("./models/cartoon_boxing_ring.glb")
       </Stage>
 
 
-<group position={[0, -5.2, 0]} scale={0.5}>
+<group position={[0, -5.2, 0]} scale={0.5} visible={ isChecked }>
 <primitive object={ringModel.scene}  />
 </group>
 

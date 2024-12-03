@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { create } from "zustand";
 import MadeForChampionsUI from "./MadeForChampionsUI";
+import { BGToggleUI } from "./BGToggleUI";
 
 // Zustand stores
 const useConfigSteps = create((set) => ({
@@ -42,7 +43,7 @@ const EditUI = () => {
   const steps = useConfigSteps((state) => state.steps);
   const increaseSteps = useConfigSteps((state) => state.increaseSteps);
   const { setColor, setMetallic } = useMaterialStore();
- 
+
 
   const content = [
     {
@@ -170,6 +171,8 @@ const EditUI = () => {
   };
 
   return (
+    <>
+
     <div className="customize w-[25rem] h-[auto] absolute left-6 top-1/2 -translate-y-1/2 bg-[#ffffff] flex flex-col justify-between rounded-lg shadow-md p-4">
       {/* Glove Details Header */}
       <div className="flex gap-2 justify-center items-center">
@@ -254,24 +257,30 @@ const EditUI = () => {
 
 
 
+
+
+
       {/* Navigation Buttons */}
       <div className="flex justify-between mt-4">
         <button
           id="gprev"
           onClick={() => useConfigSteps.getState().decreaseSteps()}
-        >
+          >
           Back
         </button>
         <button
           className=""
           id="gnext"
           onClick={() => increaseSteps()}
-         
-        >
+          
+          >
           Next
         </button>
       </div>
     </div>
+          <BGToggleUI/>
+
+          </>
   );
 };
 
