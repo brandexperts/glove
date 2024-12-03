@@ -13,7 +13,7 @@ const BGToggleUI = () => {
   return (
     <div className='absolute right-8 bottom-8 flex flex-col justify-center items-center'>
       {/* Label for the toggle */}
-      <p className="mb-2 text-xl text-center font-semibold text-white">Toggle Background</p>
+      <p className="mb-2 text-xl text-center font-semibold text-gray-400">Toggle Background</p>
       
       <label className="relative inline-flex items-center cursor-pointer">
         <input
