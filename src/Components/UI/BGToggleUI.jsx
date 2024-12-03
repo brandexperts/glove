@@ -2,7 +2,7 @@ import React from 'react';
 import { create } from 'zustand';
 
 const useStore = create((set) => ({
-    isChecked: false, // Initial state for the toggle
+    isChecked: true, // Initial state for the toggle
     toggleChecked: () => set((state) => ({ isChecked: !state.isChecked })),
   }));
 

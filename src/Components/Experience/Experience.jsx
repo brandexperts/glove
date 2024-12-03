@@ -154,7 +154,7 @@ const { isChecked } = useStore();
       />
       <pointLight position={[0, 1, 0]} intensity={0.8} />
 
-      <OrbitControls minDistance={3} maxDistance={10} maxPolarAngle={Math.PI / 2 + 0.23}/>
+      <OrbitControls minDistance={1.9} maxDistance={5} maxPolarAngle={Math.PI / 2 + 0.23}/>
     </>
   )
 }
