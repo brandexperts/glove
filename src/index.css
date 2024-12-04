@@ -12,6 +12,10 @@ body{
   background: linear-gradient(to top, #f4f7f9 20%, #d5e1e7 40%, #dfe8ed);
 }
 
+@font-face {
+  font-family: 'OE1Bold';
+  src: url('./font/oe1_bold.ttf') format('truetype');
+}
 
 
 

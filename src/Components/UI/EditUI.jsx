@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { create } from "zustand";
 import MadeForChampionsUI from "./MadeForChampionsUI";
 import { BGToggleUI } from "./BGToggleUI";
+import {TextInputUI} from "./TextInputUI";
 
 // Zustand stores
 const useConfigSteps = create((set) => ({
   steps: 0,
   increaseSteps: () =>
     set((state) => {
-      if ( state.steps <= 7) {
+      if ( state.steps <= 8) {
         return { steps: state.steps + 1 };
       }
       return state; // No change
@@ -100,6 +101,12 @@ const EditUI = () => {
       selection: "Select Color",
       img: "./color-options/steps/st7.jpg",
     },
+    {
+      step: 10,
+      title: "Fist Text",
+      selection: "Add Text",
+      img: "./color-options/steps/st7.jpg",
+    },
   ];
 
 
@@ -173,7 +180,7 @@ const EditUI = () => {
   return (
     <>
 
-    <div className="customize w-[25rem] h-[auto] absolute left-6 top-1/2 -translate-y-1/2 bg-[#ffffff] flex flex-col justify-between rounded-lg shadow-md p-4">
+    <div className="customize w-[25rem] h-[auto] absolute left-6 top-1/2 -translate-y-1/2 bg-[#ffffff] flex flex-col justify-between rounded-lg shadow-md p-4 ">
       {/* Glove Details Header */}
       <div className="flex gap-2 justify-center items-center">
         <div className="text-center mb-4">
@@ -189,8 +196,6 @@ const EditUI = () => {
         </div>
       </div>
 
-
-{/* Palm Logo Options  */}
 
 
 
@@ -211,9 +216,9 @@ const EditUI = () => {
  
 
 
-{steps !== 3 && (
-  <div className="flex items-center justify-between">
-    {/* Color Tabs */}
+{steps !== 3 && steps !== 9 && (
+  <div className="flex items-center justify-between ">
+
     <div className="flex flex-col gap-2 w-full ml-4">
       <div className="flex justify-evenly my-3 text-sm">
         <button
@@ -234,7 +239,7 @@ const EditUI = () => {
         </button>
       </div>
 
-      {/* Swatches */}
+ 
       <div className={`flex flex-wrap gap-1 ${isMetallic ? "metallic-options" : "matte-options"}`}>
         {colors[0][isMetallic ? "Metallic" : "Matte"].map((color, index) => (
           <div
@@ -253,9 +258,7 @@ const EditUI = () => {
 )}
 
 
-{/* <MadeForChampionsUI/> */}
-
-
+{steps === 9 && <TextInputUI />}
 
 
 
