@@ -38,9 +38,9 @@ const Scene = () => {
 
   const steps = useConfigSteps((state) => state.steps)
 
-  // useFrame((state) => {
-  //   console.log(state.camera.position) // Access the camera here safely
-  // })
+  useFrame((state) => {
+    console.log(state.camera.position) // Access the camera here safely
+  })
 
   const scene = useThree()
 const camera = scene.camera
@@ -115,6 +115,14 @@ else if(steps === 7){
 else if(steps === 8){
   gsap.to(camera.position, {
     x: 0.3649433112594433, y: 0.19623266149409252, z: -2.9712475231307516,
+    duration : 0.3,
+    ease: "back.out(2)",
+  })
+}
+
+else if(steps === 9){
+  gsap.to(camera.position, {
+    x: 0.13629044718121566, y: 0.0959210733507588, z: 2.8415422753784756,
     duration : 0.3,
     ease: "back.out(2)",
   })
