@@ -12,10 +12,10 @@ const Navbar = () => {
 
 
 <div  >
-    <img src="./color-options/boxing-logos/boxing_logo.png" className=' w-52 ' alt="" />
+    <img src="./color-options/boxing-logos/boxing_logo.png" className=' w-16 lg:w-52 ' alt="" />
 </div>
 
-<div className=' flex items-center text-[2vw] font-bold italic text-slate-800'>
+<div className=' hidden lg:block flex items-center text-[2vw] font-bold italic text-slate-800'>
     Edit Your Glove
 </div>
 

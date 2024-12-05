@@ -19,7 +19,7 @@ const Experience = () => {
 <KonvaCanvas/>
 
     <Canvas
-      className="webgl-canvas"
+      className="webgl-canvas !h-2/3 lg:!h-screen"
       shadows
       gl={{
         toneMapping: ACESFilmicToneMapping,

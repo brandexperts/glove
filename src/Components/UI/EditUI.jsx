@@ -3,25 +3,31 @@ import { create } from "zustand";
 import MadeForChampionsUI from "./MadeForChampionsUI";
 import { BGToggleUI } from "./BGToggleUI";
 import {TextInputUI} from "./TextInputUI";
+import Drawer from "./Drawer";
 
 // Zustand stores
 const useConfigSteps = create((set) => ({
   steps: 0,
   increaseSteps: () =>
     set((state) => {
-      if ( state.steps <= 8) {
+      if (state.steps < 10) {  // Set a max limit for the steps, for example 10
         return { steps: state.steps + 1 };
       }
-      return state; // No change
+      return state; // No change if steps are already 10
     }),
   decreaseSteps: () =>
     set((state) => {
-      if (state.steps >0 ) {
+      if (state.steps > 0) {  // Prevent going below step 0
         return { steps: state.steps - 1 };
       }
-      return state; // No change
+      return state; // No change if steps are already 0
     }),
+  setSteps: (newSteps) =>
+    set(() => ({
+      steps: newSteps,
+    })),
 }));
+
 
 
 const useMaterialStore = create((set) => ({
@@ -180,14 +186,47 @@ const EditUI = () => {
   return (
     <>
 
-    <div className="customize w-[25rem] h-[auto] absolute left-6 top-1/2 -translate-y-1/2 bg-[#ffffff] flex flex-col justify-between rounded-lg shadow-md p-4 ">
+    <div className="customize w-[full] lg:w-[25rem] h-max lg:h-auto lg:left-3 lg:top-1/2 lg:-translate-y-1/2 relative lg:absolute  bg-[#ffffff] flex flex-col justify-between rounded-lg lg:shadow-md p-4  transition-all">
       {/* Glove Details Header */}
-      <div className="flex gap-2 justify-center items-center">
+      <div className="flex gap-2 justify-between items-center">
+
+
+{/* <Drawer Button */}
+
+<div>
+<label className="btn btn-circle swap swap-rotate" htmlFor='my-drawer'>
+  {/* this hidden checkbox controls the state */}
+  <input type="checkbox" />
+
+  {/* hamburger icon */}
+  <svg
+    className="swap-off fill-current"
+    xmlns="http://www.w3.org/2000/svg"
+    width="32"
+    height="32"
+    viewBox="0 0 512 512">
+    <path d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z" />
+  </svg>
+
+  {/* close icon */}
+  <svg
+    className="swap-on fill-current"
+    xmlns="http://www.w3.org/2000/svg"
+    width="32"
+    height="32"
+    viewBox="0 0 512 512">
+    <polygon
+      points="400 145.49 366.51 112 256 222.51 145.49 112 112 145.49 222.51 256 112 366.51 145.49 400 256 289.49 366.51 400 400 366.51 289.49 256 400 145.49" />
+  </svg>
+</label>
+    </div>
+
+
         <div className="text-center mb-4">
-          <div className="text-lg font-bold font-serif text-slate-600">
+          <div className="text-xl font-bold  text-black">
             {content[steps].title}
           </div>
-          <div className="text-sm text-green-500 font-semibold">
+          <div className="text-sm text-gray-500 font-semibold">
             {content[steps].selection}
           </div>
         </div>
@@ -200,16 +239,20 @@ const EditUI = () => {
 
 
 {steps === 3 && (
-  <div className="flex justify-evenly bg-slate-700 py-10 rounded-xl items-center">
+  <div className="flex justify-evenly py-10  rounded-xl items-center">
+    <div className=" h-auto w-full  flex justify-evenly py-8 bg-gray-300 rounded-md">
+
+
     {logosContent.map((logo, index) => (
       <img
-        key={index}
-        className="w-24 cursor-pointer"
-        src={logo.src}
-        onClick={() => handleSrcClick(logo.src)}
-        alt={`Logo ${index}`}
+      key={index}
+      className="w-24 cursor-pointer"
+      src={logo.src}
+      onClick={() => handleSrcClick(logo.src)}
+      alt={`Logo ${index}`}
       />
     ))}
+    </div>
   </div>
 )}
 
@@ -222,16 +265,16 @@ const EditUI = () => {
     <div className="flex flex-col gap-2 w-full ml-4">
       <div className="flex justify-evenly my-3 text-sm">
         <button
-          className={`px-2 py-1 w-1/2 shadow-lg bg-white border text-lg font-semibold rounded-sm ${
-            isMetallic ? "text-blue-600" : "text-gray-500"
+          className={`px-2 py-1 w-1/2 shadow-lg  border text-lg font-semibold rounded-sm ${
+            isMetallic ? "text-white bg-black"  : "text-gray-500"
           }`}
           onClick={() => setIsMetallic(true)}
         >
           METALLIC
         </button>
         <button
-          className={`px-2 py-1 w-1/2 shadow-lg bg-white border text-lg font-semibold rounded-sm ${
-            !isMetallic ? "text-blue-600" : "text-gray-500"
+          className={`px-2 py-1 w-1/2 shadow-lg border text-lg font-semibold rounded-sm ${
+            !isMetallic ? "text-white bg-black": "text-gray-500"
           }`}
           onClick={() => setIsMetallic(false)}
         >
@@ -265,20 +308,11 @@ const EditUI = () => {
 
       {/* Navigation Buttons */}
       <div className="flex justify-between mt-4">
-        <button
-          id="gprev"
-          onClick={() => useConfigSteps.getState().decreaseSteps()}
-          >
-          Back
-        </button>
-        <button
-          className=""
-          id="gnext"
-          onClick={() => increaseSteps()}
-          
-          >
-          Next
-        </button>
+
+        {/* <button class="btn btn-active"  onClick={() => useConfigSteps.getState().decreaseSteps()}>Prev</button> */}
+        <button className="btn btn-active " onClick={() => useConfigSteps.getState().decreaseSteps()}> Prev</button>
+      
+        <button className="btn btn-active btn-neutral text-white"  onClick={() => increaseSteps()} >Next</button>
       </div>
     </div>
           <BGToggleUI/>

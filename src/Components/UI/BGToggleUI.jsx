@@ -11,7 +11,7 @@ const BGToggleUI = () => {
   const { isChecked, toggleChecked } = useStore(); // Access state and toggle function from Zustand store
 
   return (
-    <div className='absolute right-8 bottom-8 flex flex-col justify-center items-center'>
+    <div className='absolute top-2 lg:top-auto lg:top-0 right-1 lg:right-8 lg:bottom-8 flex flex-col justify-center items-center'>
       {/* Label for the toggle */}
       <p className="mb-2 text-xl text-center font-semibold text-gray-400">Toggle Background</p>
       
