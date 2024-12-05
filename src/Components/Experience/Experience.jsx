@@ -38,9 +38,6 @@ const Scene = () => {
 
   const steps = useConfigSteps((state) => state.steps)
 
-  useFrame((state) => {
-    console.log(state.camera.position) // Access the camera here safely
-  })
 
   const scene = useThree()
 const camera = scene.camera
