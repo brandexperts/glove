@@ -4,9 +4,7 @@ import React, { useEffect } from 'react'
 import Glove from '../Models/Glove'
 import { ACESFilmicToneMapping } from 'three'
 import { useConfigSteps } from '../UI/EditUI'
-import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
-import { useControls } from 'leva'
 import LogoMesh from '../Models/LogoMesh'
 import {KonvaCanvas} from './KonvaCanvas'
 import { useStore } from '../UI/BGToggleUI'
@@ -25,6 +23,7 @@ const Experience = () => {
         toneMapping: ACESFilmicToneMapping,
         toneMappingExposure: 1,
         logarithmicDepthBuffer: true,
+        preserveDrawingBuffer : true,
         antialias : true,
       }}
       >

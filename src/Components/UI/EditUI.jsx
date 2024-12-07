@@ -3,7 +3,7 @@ import { create } from "zustand";
 import MadeForChampionsUI from "./MadeForChampionsUI";
 import { BGToggleUI } from "./BGToggleUI";
 import {TextInputUI} from "./TextInputUI";
-import Drawer from "./Drawer";
+import DownloadCanvasUI from "./DownloadCanvasUI";
 
 // Zustand stores
 const useConfigSteps = create((set) => ({
@@ -112,6 +112,12 @@ const EditUI = () => {
       title: "Fist Text",
       selection: "Add Text",
       img: "./color-options/steps/st7.jpg",
+    },
+    {
+      step: 11,
+      title: "Download Image",
+      selection: "",
+      img: "./color-options/steps/download_icon.png",
     },
   ];
 
@@ -259,7 +265,7 @@ const EditUI = () => {
  
 
 
-{steps !== 3 && steps !== 9 && steps!==8 && (
+{steps !== 3 && steps !== 9 && steps !== 10  && steps!==8 && (
   <div className="flex items-center justify-between ">
 
     <div className="flex flex-col gap-2 w-full ml-4">
@@ -329,6 +335,7 @@ const EditUI = () => {
 
 
 {steps === 9 && <TextInputUI />}
+{steps === 10 && <DownloadCanvasUI />}
 
 
 
@@ -339,7 +346,10 @@ const EditUI = () => {
         {/* <button class="btn btn-active"  onClick={() => useConfigSteps.getState().decreaseSteps()}>Prev</button> */}
         <button className="btn btn-active " onClick={() => useConfigSteps.getState().decreaseSteps()}> Prev</button>
       
+      
+{steps !== 10 &&
         <button className="btn btn-active btn-neutral text-white"  onClick={() => increaseSteps()} >Next</button>
+}
       </div>
     </div>
           <BGToggleUI/>
