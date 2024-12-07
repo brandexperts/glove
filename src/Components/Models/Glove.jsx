@@ -7,18 +7,16 @@ import { useGLTF, useTexture } from '@react-three/drei'
 import { Color, MeshStandardMaterial } from 'three';
 import {useMaterialStore, useConfigSteps} from "../UI/EditUI"
 import * as THREE from "three"
-import { useCanvasColor } from '../Experience/KonvaCanvas';
 import { useTextConfig } from '../UI/TextInputUI';
 
 export default function Glove(props) {
-  const { nodes, materials } = useGLTF('./models/glove_text_area.glb')
+  const { nodes, materials } = useGLTF('./models/glove_text_test.glb')
 
 
 const normalMap = useTexture("./textures/nleather5.png")
 
 const palmbackNormal = useTexture("./textures/nleather5.png")
 
-const { canvasColor , setCanvasColor } = useCanvasColor();
 const { textInput, position , scale } = useTextConfig();
 // palmbackNormal.repeat.set(5,5)
 
@@ -40,9 +38,13 @@ const lacesRef = useRef()
 const thumbConnectRef = useRef()
 const MadeForChampionsRef = useRef()
 
+let snap = false;
 
-
-
+const capture = () => {
+	const cav = document.querySelector('#container canvas');
+  const base64 = cav.toDataURL('img/png');
+  document.querySelector('#img').src = base64;
+};
 
 let canvas = Array.from(document.getElementsByTagName("canvas"))[0],
 ctx,
@@ -70,6 +72,7 @@ useEffect(()=>{
   if (steps === 0) {
     setFistMetalness(isMetallic)
 
+    fistRef.current.material.color = new Color(color)
     fistRef.current.material.roughness = isMetallic ? 0.2 : 0.4
     fistRef.current.material.metalness = isMetallic ? 0.8 : 0.0
       texture.needsUpdate =true;
@@ -134,17 +137,26 @@ useEffect(()=>{
 
 
 
-  // Memoized material to avoid unnecessary re-creations
-  const palmbackMat = useMemo(() => {
-    return new MeshStandardMaterial({
-      normalMap: palmbackNormal,
-      map: texture,
-      roughness : fistMetalness ? 0.2 : 0.4,
-      metalness : fistMetalness ? 0.8 : 0.0,
-    });
-  }, [canvasColor , textInput, position , scale]);
+// Memoized material to avoid unnecessary re-creations
+const palmbackMat = useMemo(() => {
+  return new MeshStandardMaterial({
+    normalMap: normalMap,
+  });
+}, [normalMap]);
 
  
+const textAreaMat = useMemo(() => {
+  return new THREE.MeshBasicMaterial({
+    map: texture,
+    transparent: true,  // Enable transparency
+    opacity: 1.0,       // You can adjust this if you want partial transparency
+  });
+}, [ textInput, position, scale]);
+
+ 
+
+
+
 
 const thumboutMat = useMemo(() => {
   return new MeshStandardMaterial({
@@ -341,16 +353,17 @@ const thumbConnectMat = useMemo(() => {
         rotation={[Math.PI / 2, 0, 0]}
         scale={[0.334, 0.648, 0.067]}
       />
-      {/* <mesh
+
+<mesh
         castShadow
         receiveShadow
         geometry={nodes.textarea.geometry}
-        ref={fistTextRef}
-        material={palmTextAreaMat}
-        position={[0, 0.141, 0.173]}
-      /> */}
+        material={textAreaMat}
+        position={[0, 0.141, 0.178]}
+      />
+
     </group>
   )
 }
 
-useGLTF.preload('./models/glove_text_area.glb')
+useGLTF.preload('./models/glove_text_test.glb')
