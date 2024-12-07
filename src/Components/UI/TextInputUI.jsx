@@ -7,13 +7,9 @@ import { create } from "zustand";
 const useTextConfig = create((set) => ({
   textInput: "", // Initial state for the text input
   setTextInput: (newText) => set({ textInput: newText }), // Function to update the text input
-
-  position: 0, // Initial position (horizontal movement)
   scale: 0, // Initial scale (size)
 
-  // Functions to increment and decrement position
-  moveLeft: () => set((state) => ({ position: state.position - 2 })),
-  moveRight: () => set((state) => ({ position: state.position + 2 })),
+
 
   // Functions to increment and decrement scale
   increaseScale: () => set((state) => ({ scale: Math.min(14 ,state.scale + 2) })),
@@ -25,10 +21,6 @@ const TextInputUI = () => {
   const {
     textInput,
     setTextInput,
-    position,
-    scale,
-    moveLeft,
-    moveRight,
     increaseScale,
     decreaseScale,
   } = useTextConfig();
@@ -57,29 +49,17 @@ const TextInputUI = () => {
           />
         </div>
 
-        <div className="w-full flex flex-col gap-10 mt-4">
-          {/* Move */}
-          <div className="flex justify-around items-center">
-            <div>Move</div>
-            <div className="flex gap-14">
-              <div onClick={moveLeft} className=" cursor-pointer">
-                <SlArrowLeft color="#0a83da" />
-              </div>
-              <div onClick={moveRight} className=" cursor-pointer">
-                <SlArrowRight color="#0a83da" />
-              </div>
-            </div>
-          </div>
-
+        <div className="w-full flex flex-col gap-10  my-6">
+    
           {/* Scale */}
           <div className="flex justify-around items-center">
             <div>Scale</div>
             <div className="flex gap-14">
               <div onClick={increaseScale} className=" cursor-pointer">
-                <FaPlus color="#0a83da" />
+                <FaPlus color="#000" />
               </div>
               <div onClick={decreaseScale} className=" cursor-pointer">
-                <FaMinus color="#0a83da" />
+                <FaMinus color="#000" />
               </div>
             </div>
           </div>
