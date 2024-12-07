@@ -259,7 +259,7 @@ const EditUI = () => {
  
 
 
-{steps !== 3 && steps !== 9 && (
+{steps !== 3 && steps !== 9 && steps!==8 && (
   <div className="flex items-center justify-between ">
 
     <div className="flex flex-col gap-2 w-full ml-4">
@@ -299,6 +299,33 @@ const EditUI = () => {
     </div>
   </div>
 )}
+
+
+{steps === 8 &&
+
+<div className=" flex w-full justify-around my-10">
+
+<div className=" flex flex-col justify-center items-center">
+
+<div
+            className="w-9 h-9 border cursor-pointer bg-slate-100 shadow-xl"
+            onClick={() => handleColorClick( "white" , false)}
+            ></div>
+            <div className=" text-slate-800 font-semibold text-lg">White</div>
+            </div>
+            <div className=" flex flex-col justify-center items-center">
+
+<div
+            className="w-9 h-9 border cursor-pointer bg-gray-900 shadow-xl"
+            onClick={() => handleColorClick( "black" , false)}
+            ></div>
+            <div className=" text-slate-800 font-semibold text-lg">black</div>
+            </div>
+
+
+            </div>
+          }
+
 
 
 {steps === 9 && <TextInputUI />}
