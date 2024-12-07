@@ -7,7 +7,7 @@ const DownloadCanvasUI = () => {
     function download(){
         const canvas = Array.from(document.getElementsByTagName("canvas"))[1]
         const link = document.createElement('a')
-        link.setAttribute('download', 'glove-picture')
+        link.setAttribute('download', 'glove-picture.png')
         link.setAttribute('href', canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream'))
         link.click()
         console.log("Downlaod")
