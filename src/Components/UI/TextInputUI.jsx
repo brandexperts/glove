@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
 import { create } from "zustand";
@@ -25,14 +25,30 @@ const TextInputUI = () => {
     decreaseScale,
   } = useTextConfig();
 
+
+const [showTextUI , setShowTextUI] = useState(false)
+
+
   return (
     <>
+
+<div class="form-control my-4">
+  <label class="label cursor-pointer">
+    <span class="label-text">Add Text</span>
+    <input type="checkbox" class="toggle"  onChange={(e)=>{setShowTextUI(e.target.checked)}} />
+  </label>
+</div>
+
+
+{ showTextUI &&
+
+
       <div>
         <div className="w-full max-w-xs p-5 bg-white rounded-lg font-mono">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="unique-input"
-          >
+            >
             Add Text
           </label>
           <input
@@ -46,7 +62,7 @@ const TextInputUI = () => {
             id="unique-input"
             value={textInput} // Bind the input value to the Zustand state
             onInput={(e) => setTextInput(e.target.value)} // Update the Zustand state on input change
-          />
+            />
         </div>
 
         <div className="w-full flex flex-col gap-10  my-6">
@@ -67,6 +83,7 @@ const TextInputUI = () => {
 
 
       </div>
+          }
     </>
   );
 };

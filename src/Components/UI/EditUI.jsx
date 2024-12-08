@@ -332,18 +332,29 @@ const EditUI = () => {
 <div className=" flex flex-col justify-center items-center">
 
 <div
-            className="w-9 h-9 border cursor-pointer bg-slate-100 shadow-xl"
+            className=" w-12 h-12 border cursor-pointer bg-slate-100 shadow-xl"
             onClick={() => handleColorClick( "white" , false)}
             ></div>
             <div className=" text-slate-800 font-semibold text-lg">White</div>
             </div>
+
+
             <div className=" flex flex-col justify-center items-center">
 
 <div
-            className="w-9 h-9 border cursor-pointer bg-gray-900 shadow-xl"
+            className=" w-12 h-12 border cursor-pointer bg-gray-900 shadow-xl"
             onClick={() => handleColorClick( "black" , false)}
             ></div>
             <div className=" text-slate-800 font-semibold text-lg">black</div>
+            </div>
+
+            <div className=" flex flex-col justify-center items-center">
+
+<div
+            className=" w-12 h-12 border cursor-pointer bg-yellow-400 shadow-xl"
+            onClick={() => handleColorClick( "gold" , false)}
+            ></div>
+            <div className=" text-slate-800 font-semibold text-lg">Gold</div>
             </div>
 
 
