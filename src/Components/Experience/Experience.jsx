@@ -8,6 +8,7 @@ import gsap from 'gsap'
 import LogoMesh from '../Models/LogoMesh'
 import {KonvaCanvas} from './KonvaCanvas'
 import { useStore } from '../UI/BGToggleUI'
+import { useTakeImage } from '../UI/DownloadCanvasUI'
 const Experience = () => {
 
 
@@ -33,15 +34,34 @@ const Experience = () => {
   )
 }
 
+// Front Pos : x: 0.12533035728202002, y: -0.11391217635125213, z: 3.517064375364139
+// Back Pos : x: 0.16245868042682565, y: -0.0023631888198931976, z: -3.014561931051224
+
 const Scene = () => {
 
+  
   const steps = useConfigSteps((state) => state.steps)
-
-
+  
+  
   const scene = useThree()
-const camera = scene.camera
+  const camera = scene.camera
+  
 
 
+  const { take1, take2,  setTake1, setTake2 } = useTakeImage();
+  useEffect(() => {
+    if (take1) {
+      // First camera angle
+      camera.position.set(0.125330, -0.113912, 3.51706);
+      setTake1(false);  // Reset take1 after capturing image
+    }
+  
+    if (take2) {
+      // Second camera angle
+      camera.position.set(0.162458, -0.0023631, -3.01456);
+      setTake2(false);  // Reset take2 after capturing image
+    }
+  }, [take1, take2]);
 
   useEffect(()=>{
 
@@ -163,4 +183,4 @@ const { isChecked } = useStore();
   )
 }
 
-export default Experience
+export {Experience}

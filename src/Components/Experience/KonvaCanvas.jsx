@@ -27,7 +27,7 @@ const KonvaCanvas = () => {
             fill={"#FFF"}
             fontSize={38 + scale}
             draggable
-            x={220 + (scale *0.7)} // Center horizontally (400 / 2)
+            x={220 + (scale *0.5)} // Center horizontally (400 / 2)
             y={349} // Center vertically (400 / 2)
             offsetX={(textInput.length * (30 + scale)) / 2} // Adjust based on text length and font size
             offsetY={((38 + scale) / 2)} // Adjust for the height of the text (fontSize + scale)

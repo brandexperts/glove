@@ -3,14 +3,15 @@ import { create } from "zustand";
 import MadeForChampionsUI from "./MadeForChampionsUI";
 import { BGToggleUI } from "./BGToggleUI";
 import {TextInputUI} from "./TextInputUI";
-import DownloadCanvasUI from "./DownloadCanvasUI";
+import {DownloadCanvasUI} from "./DownloadCanvasUI";
+import { OuncesUI, PaddingUI } from "./PaddingAndOuncesUI";
 
 // Zustand stores
 const useConfigSteps = create((set) => ({
   steps: 0,
   increaseSteps: () =>
     set((state) => {
-      if (state.steps < 10) {  // Set a max limit for the steps, for example 10
+      if (state.steps < 12) {  // Set a max limit for the steps, for example 10
         return { steps: state.steps + 1 };
       }
       return state; // No change if steps are already 10
@@ -113,8 +114,25 @@ const EditUI = () => {
       selection: "Add Text",
       img: "./color-options/steps/st7.jpg",
     },
+
     {
       step: 11,
+      title: "Internal Padding",
+      selection: "Select Padding",
+      img: "./color-options/steps/st7.jpg",
+    },
+
+    {
+      step: 12,
+      title: "Ounces",
+      selection: "Choose Ounces",
+      img: "./color-options/steps/st7.jpg",
+    },
+
+
+
+    {
+      step: 13,
       title: "Download Image",
       selection: "",
       img: "./color-options/steps/download_icon.png",
@@ -265,7 +283,7 @@ const EditUI = () => {
  
 
 
-{steps !== 3 && steps !== 9 && steps !== 10  && steps!==8 && (
+{steps !== 3 && steps !== 9 && steps !== 12  && steps!==8 && steps!==10 && steps!==11 && (
   <div className="flex items-center justify-between ">
 
     <div className="flex flex-col gap-2 w-full ml-4">
@@ -335,7 +353,9 @@ const EditUI = () => {
 
 
 {steps === 9 && <TextInputUI />}
-{steps === 10 && <DownloadCanvasUI />}
+{steps === 12 && <DownloadCanvasUI />}
+{steps === 10 && <PaddingUI />}
+{steps === 11 && <OuncesUI />}
 
 
 
@@ -347,7 +367,7 @@ const EditUI = () => {
         <button className="btn btn-active " onClick={() => useConfigSteps.getState().decreaseSteps()}> Prev</button>
       
       
-{steps !== 10 &&
+{steps !== 12 &&
         <button className="btn btn-active btn-neutral text-white"  onClick={() => increaseSteps()} >Next</button>
 }
       </div>

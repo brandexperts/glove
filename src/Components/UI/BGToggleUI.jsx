@@ -21,7 +21,7 @@ const BGToggleUI = () => {
         <input
         checked={isChecked} 
         onChange={toggleChecked}
-        type="checkbox" class="toggle toggle-lg" />
+        type="checkbox" className="toggle toggle-lg" />
       </label>
     </div>
   );
