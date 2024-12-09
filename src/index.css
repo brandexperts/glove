@@ -14,7 +14,7 @@ body{
 
 @font-face {
   font-family: 'OE1Bold';
-  src: url('./font/oe1_bold.ttf') format('truetype');
+  src: url('/font/oe1_bold.ttf') format('truetype');
 }
 
 

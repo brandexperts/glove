@@ -1,7 +1,7 @@
 import { Environment, OrbitControls, Stage, useGLTF } from '@react-three/drei'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import React, { useEffect } from 'react'
-import Glove from '../Models/Glove'
+import {Glove} from '../Models/Glove'
 import { ACESFilmicToneMapping } from 'three'
 import { useConfigSteps } from '../UI/EditUI'
 import gsap from 'gsap'
