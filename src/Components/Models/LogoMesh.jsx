@@ -1,33 +1,36 @@
 import React, { useEffect, useRef } from 'react';
 import { useGLTF, useTexture } from '@react-three/drei';
-import { useFistLogo, useConfigSteps} from "../UI/EditUI"
+import { useFistLogo, useConfigSteps } from "../UI/EditUI";
+import { useDesignStore } from '../UI/PopularDesignUI';
+
 export default function LogoMesh(props) {
   const { nodes, materials } = useGLTF('./models/logo_mesh.glb');
 
   const logoRef = useRef(null);
-  const steps = useConfigSteps((state)=> state.steps)
-  const src = useFistLogo((state)=> state.src)
-
-
-
-  const secondlogo = useTexture(src);
-
+  const steps = useConfigSteps((state) => state.steps);
   
-  useEffect(() => {
-      if (logoRef.current && secondlogo) {
-          // Ensure the texture is not flipped vertically
-          secondlogo.flipY = false;
-          secondlogo.needsUpdate = true;
-          
-          // Assign the texture to the material's map
-          const material = logoRef.current.material;
-          material.map = secondlogo;
-          material.needsUpdate = true; // Ensure material updates
+  // Get both src from useFistLogo and selectedDesign from useDesignStore
+  const src = useFistLogo((state) => state.src);
+  const { selectedDesign } = useDesignStore();
 
-          
-          // console.log(src)
+  // Determine which texture to use, prioritizing backLogo over src
+  const textureToUse = selectedDesign?.backLogo || src;
+
+  // Load texture using useTexture hook
+  const logoTexture = textureToUse ? useTexture(textureToUse) : null;
+
+  useEffect(() => {
+    if (logoRef.current && logoTexture) {
+      // Ensure the texture is not flipped vertically
+      logoTexture.flipY = false;
+      logoTexture.needsUpdate = true;
+      
+      // Assign the texture to the material's map
+      const material = logoRef.current.material;
+      material.map = logoTexture;
+      material.needsUpdate = true; // Ensure material updates
     }
-  }, [secondlogo, src]);
+  }, [logoTexture, src, selectedDesign?.backLogo]);
 
   return (
     <group {...props} dispose={null}>

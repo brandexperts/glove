@@ -20,7 +20,7 @@ const useDesignStore = create((set) => ({
         insideThumbCover: { metalic: true, color: "#0072CE" },
         trim: { metalic: true, color: "#0072CE" },
         laces: { metalic: true, color: "#0072CE" },
-        backLogo : ""
+        backLogo : "./color-options/boxing-logos/boxing_logo_color.png"
       },
       {
         Name: "Second",
@@ -33,6 +33,7 @@ const useDesignStore = create((set) => ({
         insideThumbCover: { metalic: false, color: "red" },
         trim: { metalic: false, color: "red" },
         laces: { metalic: false, color: "red" },
+        backLogo : "./color-options/boxing-logos/boxing_logo.png"
       },
     ];
   
