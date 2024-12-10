@@ -5,6 +5,7 @@ import { create } from 'zustand';
 import { useMaterialStore, useConfigSteps } from "../UI/EditUI"
 import * as THREE from "three"
 import { useTextConfig } from '../UI/TextInputUI';
+import { useDesignStore } from '../UI/PopularDesignUI';
 
 // Integrated Zustand Store
 const useGlovePartsStore = create((set) => ({
@@ -40,17 +41,21 @@ const useGlovePartsStore = create((set) => ({
   function Glove(props) {
   const { nodes, materials } = useGLTF('./models/glove_text_test.glb')
 
+
+  const {selectedDesign} = useDesignStore()
+  
+  
   const normalMap = useTexture("./textures/nleather5.png")
   const palmbackNormal = useTexture("./textures/nleather5.png")
-
+  
   const { textInput, position, scale } = useTextConfig();
   const steps = useConfigSteps((state) => state.steps)
   const color = useMaterialStore((state) => state.color)
   const isMetallic = useMaterialStore((state) => state.isMetallic)
-
+  
   // Get the updateGlovePart function from the store
   const updateGlovePart = useGlovePartsStore((state) => state.updateGlovePart)
-
+  
   // Refs for different parts of the glove
   const fistRef = useRef()
   const thumbRef = useRef()
@@ -61,31 +66,31 @@ const useGlovePartsStore = create((set) => ({
   const lacesRef = useRef()
   const thumbConnectRef = useRef()
   const MadeForChampionsRef = useRef()
-
+  
   // Convert Color to hex string
   const colorToHex = (color) => {
     return '#' + color.getHexString()
   }
-
+  
   // Effect to update materials and store when color or metallic state changes
   useEffect(() => {
     palmbackNormal.wrapS = THREE.RepeatWrapping;
     palmbackNormal.WrapT = THREE.RepeatWrapping;
     palmbackNormal.needsUpdate = true;
-
-    // Update materials based on current step and apply to store
     const updateMaterial = (ref, partName) => {
       if (ref.current) {
         const currentColor = new Color(color)
         ref.current.material.color = currentColor
         ref.current.material.roughness = isMetallic ? 0.2 : 0.4
         ref.current.material.metalness = isMetallic ? 0.8 : 0.0
-
+        
         // Update store with current part details
         updateGlovePart(partName, colorToHex(currentColor), isMetallic ? 'Metallic' : 'Matte')
       }
     }
-
+    
+    // Update materials based on current step and apply to store
+    
     // Mapping of steps to specific parts and their refs
     const stepMaterialMap = {
       0: { ref: fistRef, name: 'Fist' },
@@ -107,7 +112,7 @@ const useGlovePartsStore = create((set) => ({
       7: { ref: trimRef, name: 'Trim' },
       8: { ref: lacesRef, name: 'Laces' }
     }
-
+    
     const currentStepConfig = stepMaterialMap[steps]
     
     if (currentStepConfig) {
@@ -125,7 +130,42 @@ const useGlovePartsStore = create((set) => ({
         updateMaterial(currentStepConfig.ref, currentStepConfig.name)
       }
     }
-  }, [color , isMetallic])
+  }, [color , isMetallic , selectedDesign])
+  
+  
+
+  useEffect(() => {
+    if (!selectedDesign) return;
+  
+    const refs = [
+      { ref: fistRef, name: 'Fist', design: selectedDesign.fist },
+      { ref: thumbRef, name: 'Thumb', design: selectedDesign.frontThumb },
+      { ref: wristRef, name: 'Wrist', design: selectedDesign.wristColor },
+      { ref: PalmWristRef, name: 'Palm Wrist', design: selectedDesign.internalPalm },
+      { ref: insideThumbRef, name: 'Inside Thumb', design: selectedDesign.innerThumb },
+      { ref: thumbConnectRef, name: 'Thumb Connect', design: selectedDesign.insideThumbCover },
+      { ref: trimRef, name: 'Trim', design: selectedDesign.trim },
+      { ref: lacesRef, name: 'Laces', design: selectedDesign.laces },
+    ];
+  
+    refs.forEach(({ ref, name, design }) => {
+      if (ref.current && design) {
+        const { color, metalic } = design;
+        ref.current.material.color.set(color);
+        ref.current.material.roughness = metalic ? 0.2 : 0.4;
+        ref.current.material.metalness = metalic ? 0.8 : 0.0;
+        
+        MadeForChampionsRef.current.material.color = new Color(selectedDesign.wristColor.color)
+        MadeForChampionsRef.current.material.metalness = 0.5
+        MadeForChampionsRef.current.material.roughness = 0.9
+  
+        // Pass the correct arguments: name, color, and finish
+        updateGlovePart(name, color, metalic ? 'Metallic' : 'Matte')
+      }
+    });
+  }, [selectedDesign]);
+
+
 
 
 let canvas = Array.from(document.getElementsByTagName("canvas"))[0],
@@ -214,15 +254,7 @@ const thumbConnectMat = useMemo(() => {
 
 
 
-// Text Area Canvas 
 
-
-
-// useEffect(()=>{
-//   texture.needsUpdate = true;
-// }, [palmbackNormal, color])
-
-{/* <meshStandardMaterial normalMap={normalMap} roughness={0.2} metalness={0.8} color={"#EB1F00"}/> */}
   return (
     <group {...props} dispose={null}>
       <mesh

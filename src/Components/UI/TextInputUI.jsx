@@ -32,10 +32,10 @@ const [showTextUI , setShowTextUI] = useState(false)
   return (
     <>
 
-<div class="form-control my-4">
-  <label class="label cursor-pointer">
-    <span class="label-text">Add Text</span>
-    <input type="checkbox" class="toggle"  onChange={(e)=>{setShowTextUI(e.target.checked)}} />
+<div className="form-control my-4">
+  <label className="label cursor-pointer">
+    <span className="label-text">Add Text</span>
+    <input type="checkbox" className="toggle"  onChange={(e)=>{setShowTextUI(e.target.checked)}} />
   </label>
 </div>
 

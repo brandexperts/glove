@@ -168,7 +168,7 @@ className=' w-full h-auto'
 
 {/* Download ////////// */}
 
-<button class="btn btn-neutral my-3" onClick={()=>{
+<button className="btn btn-neutral my-3" onClick={()=>{
   downloadResult()
 }}>Download</button>
 

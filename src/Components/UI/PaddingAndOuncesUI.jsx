@@ -21,7 +21,13 @@ const PaddingUI = () => {
     <div className="my-6 flex flex-col gap-6">
       <div className="form-control">
         <label className="label cursor-pointer">
-          <span className="text-lg font-semibold">Premium PuLat</span>
+          
+        <div className=' flex  gap-2 just-center items-center '>
+
+<img className='  w-20' src="/color-options/steps/st7.jpg" alt="" />
+
+          <span className="text-sm  text-gray-400 font-semibold">Premium PuLat</span>
+</div>
           <input
             type="radio"
             name="radio-10"
@@ -33,7 +39,12 @@ const PaddingUI = () => {
       </div>
       <div className="form-control">
         <label className="label cursor-pointer">
-          <span className="text-lg font-semibold">Premium PuLat + Horse Hair</span>
+<div className=' flex gap-2  just-center items-center '>
+
+<img className='  w-20' src="/color-options/steps/st7.jpg" alt="" />
+
+          <span className="text-sm  text-gray-400 font-semibold">Premium PuLat + Horse Hair</span>
+</div>
           <input
             type="radio"
             name="radio-10"
