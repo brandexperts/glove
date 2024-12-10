@@ -9,15 +9,14 @@ const LoadingScreen = () => {
 
     const loadingRef = useRef()
 
-useEffect(()=>{
-
-    if (loaded === 18) {
-        loadingRef.current.style.display ="none"
-    }
-
-    console.log(loaded)
-
-} , [loaded])
+    useEffect(() => {
+        // Check if all assets are loaded
+        if (loaded === total) {
+          loadingRef.current.style.display = 'none'
+        }
+        
+      }, [loaded, total]) // Include total to monitor changes
+    
 
   return (
     <div ref={loadingRef}  className=' absolute z-50 w-screen h-screen flex flex-col  justify-center items-center gap-12 bg-slate-100'>

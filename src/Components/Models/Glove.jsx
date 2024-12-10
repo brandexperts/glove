@@ -39,7 +39,7 @@ const useGlovePartsStore = create((set) => ({
 }));
 
   function Glove(props) {
-  const { nodes, materials } = useGLTF('./models/glove_text_test.glb')
+  const { nodes, materials } = useGLTF('./models/glove_text_test-v2.glb')
 
 
   const {selectedDesign} = useDesignStore()
@@ -406,7 +406,7 @@ const thumbConnectMat = useMemo(() => {
   )
 }
 
-useGLTF.preload('./models/glove_text_test.glb')
+useGLTF.preload('./models/glove_text_test-v2.glb')
 
 
 export {Glove , useGlovePartsStore}
