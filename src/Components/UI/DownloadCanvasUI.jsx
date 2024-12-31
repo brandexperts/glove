@@ -4,8 +4,6 @@ import { useSelectionStore } from './PaddingAndOuncesUI';
 import html2canvas from 'html2canvas-pro';
 import { useGlovePartsStore } from '../Models/Glove';
 
-
-
 const useTakeImage = create((set) => ({
   take1: false,
   take2: false,
@@ -13,29 +11,50 @@ const useTakeImage = create((set) => ({
   setTake2: (status) => set({ take2: status }),
 }));
 
-
-
-
-
 const DownloadCanvasUI = () => {
-
-
   const gloveParts = useGlovePartsStore((state) => state.gloveParts);
-
   const captureEl = useRef();
+  const { paddingSelection, ouncesSelection } = useSelectionStore();
+  
+const formRef = useRef()
+const result = useRef()
+
+  const [formData, setFormData] = useState({
+    name: '',
+    email: ''
+  });
+
+  // Format the glove configuration data as HTML for email
+  const formatGloveConfig = () => {
+    const partsHtml = gloveParts.map(part => `
+    Part Name : ${part.name}
+       
+          Color: ${part.color} 
+          Finish: ${part.finish}
+       
+    `).join('');
+
+    return `
+   
+          Padding: ${paddingSelection}
+         Ounces: ${ouncesSelection}
+          ${partsHtml}
+      
+    `;
+  };
 
   const downloadResult = () => {
     if (captureEl.current) {
-      html2canvas(captureEl.current , {
-        scale: 3, // Increase scale for higher resolution (3x original size)
-        useCORS: true, // Allow cross-origin images
+      html2canvas(captureEl.current, {
+        scale: 3,
+        useCORS: true,
       })
         .then((canvas) => {
           const dataURL = canvas.toDataURL('image/png');
           const link = document.createElement('a');
           link.href = dataURL;
-          link.download = 'captured-image.png'; // Set filename
-          link.click(); // Trigger download
+          link.download = 'captured-image.png';
+          link.click();
         })
         .catch((err) => {
           console.error('Error capturing the canvas:', err);
@@ -45,53 +64,164 @@ const DownloadCanvasUI = () => {
     }
   };
 
-
-
-
   const { setTake1, setTake2 } = useTakeImage();
-
-  const [imageOne , setImageOne] = useState(null)
-  const [imageTwo , setImageTwo] = useState(null)
-
+  const [imageOne, setImageOne] = useState(null);
+  const [imageTwo, setImageTwo] = useState(null);
 
   function download() {
     setTake1(true);
-  
     setTimeout(() => {
-      const canvas = Array.from(document.getElementsByTagName("canvas"))[1]
+      const canvas = Array.from(document.getElementsByTagName("canvas"))[1];
       const canvasRender1 = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
-      setImageOne(canvasRender1); 
-  
+      setImageOne(canvasRender1);
 
       setTake2(true);
-  
       setTimeout(() => {
         const canvasRender2 = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
-        setImageTwo(canvasRender2); 
-      }, 100);  
-    }, 100);  
-  
-    console.log("Download started");
+        setImageTwo(canvasRender2);
+      }, 100);
+    }, 100);
   }
 
+  const isFormValid = formData.name.trim() !== '' && 
+                     formData.email.trim() !== '' && 
+                     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
 
-  const { paddingSelection, ouncesSelection } = useSelectionStore();
-
+                     const handleSubmit = (e) => {
+                      e.preventDefault(); // Always prevent default behavior
+                    
+                      if (!isFormValid) {
+                        result.current.innerHTML = "Please fill out all required fields correctly.";
+                        return;
+                      }
+                    
+                      const formData = new FormData(formRef.current);
+                      const object = Object.fromEntries(formData);
+                      const json = JSON.stringify(object);
+                    
+                      result.current.innerHTML = "Please wait...";
+                    
+                      fetch("https://api.web3forms.com/submit", {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                          Accept: "application/json",
+                        },
+                        body: json,
+                      })
+                        .then(async (response) => {
+                          const json = await response.json();
+                          if (response.status === 200) {
+                            result.current.innerHTML = "Form submitted successfully!";
+                            document.getElementById("my_modal_3").showModal();
+                            download(); // Capture images after form submission
+                            formRef.current.reset(); // Reset the form
+                            setFormData({ name: "", email: "" }); // Reset local state
+                          } else {
+                            result.current.innerHTML = json.message || "Submission failed.";
+                          }
+                        })
+                        .catch((error) => {
+                          console.error("Error submitting the form:", error);
+                          result.current.innerHTML = "Something went wrong!";
+                        })
+                        .finally(() => {
+                          // Clear result message after some time
+                          setTimeout(() => {
+                            if (result.current) {
+                              result.current.innerHTML = "";
+                            }
+                          }, 3000);
+                        });
+                    };
+                    
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
   return (
     <>
-    
-    {/* <div className="w-full flex justify-center items-center my-10">
-      <button id="capture-btn" className="btn btn-active btn-neutral" onClick={()=>{}}>
-        Download Image
-      </button>
-    </div> */}
+      <div className="w-full flex justify-center items-center flex-col">
+        <form 
+        ref={formRef}
+          className="flex flex-col gap-5" 
+        
+          method="POST"
+          onSubmit={handleSubmit}
+        >
+          <input 
+            type="hidden" 
+            name="access_key" 
+            value="cd66d220-79b3-4cf0-9f87-d41b7576522c"
+          />
+          
+          {/* Hidden input with formatted HTML */}
+          <input 
+            type="hidden" 
+            name="glove_configuration" 
+            value={formatGloveConfig()}
+          />
 
-{/* You can open the modal using document.getElementById('ID').showModal() method */}
-<button className="btn my-8" onClick={()=>{
-  document.getElementById('my_modal_3').showModal()
-  download()
-  }} >See Final Result</button>
+          <label className="input input-bordered flex items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              className="h-4 w-4 opacity-70"
+            >
+              <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+            </svg>
+            <input
+              type="text"
+              name="name"
+              className="grow"
+              placeholder="Name"
+              value={formData.name}
+              onChange={handleInputChange}
+              required
+            />
+          </label>
+
+          <label className="input input-bordered flex items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              className="h-4 w-4 opacity-70"
+            >
+              <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
+              <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
+            </svg>
+            <input
+              type="email"
+              name="email"
+              className="grow"
+              placeholder="Email"
+              value={formData.email}
+              onChange={handleInputChange}
+              required
+            />
+          </label>
+
+          <button 
+            className={`btn ${!isFormValid ? 'btn-disabled opacity-50' : ''}`}
+            type="submit"
+          >
+            SAVE RESULTS!
+          </button>
+
+<div ref={result} className=' font-bold text-green-400 text-lg'></div>
+
+        </form>
+      </div>
+
+
+
+
 <dialog id="my_modal_3" className="modal">
   <div className="modal-box w-11/12 flex flex-col justify-center items-center">
     <form method="dialog">

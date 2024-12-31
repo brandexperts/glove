@@ -1,36 +1,50 @@
 import React, { useEffect, useRef } from 'react';
 import { useGLTF, useTexture } from '@react-three/drei';
-import { useFistLogo, useConfigSteps } from "../UI/EditUI";
+import { useConfigSteps, useFistLogo } from "../UI/EditUI";
 import { useDesignStore } from '../UI/PopularDesignUI';
 
 export default function LogoMesh(props) {
   const { nodes, materials } = useGLTF('./models/logo_mesh.glb');
-
-  const logoRef = useRef(null);
-  const steps = useConfigSteps((state) => state.steps);
-  
-  // Get both src from useFistLogo and selectedDesign from useDesignStore
-  const src = useFistLogo((state) => state.src);
+  const logoRef = useRef();
+  const { src, setSrc } = useFistLogo();
   const { selectedDesign } = useDesignStore();
+  const steps = useConfigSteps((state) => state.steps);
 
-  // Determine which texture to use, prioritizing backLogo over src
-  const textureToUse = selectedDesign?.backLogo || src;
+  // Load texture using useTexture with error fallback
+  const logoTexture = useTexture(src || './color-options/boxing-logos/boxing_logo_color.png', (texture) => {
+    texture.flipY = false;
+    texture.needsUpdate = true;
+  });
 
-  // Load texture using useTexture hook
-  const logoTexture = textureToUse ? useTexture(textureToUse) : null;
+  // Handle texture loading errors
+  useEffect(() => {
+    if (!src) {
+      console.warn('No source provided for logo texture. Using default texture.');
+    }
+  }, [src]);
 
+  // Update the source when selected design changes
+  useEffect(() => {
+    if (selectedDesign?.backLogo) {
+      setSrc(selectedDesign.backLogo);
+    }
+  }, [selectedDesign?.backLogo, setSrc]);
+
+  // Apply texture to the mesh
   useEffect(() => {
     if (logoRef.current && logoTexture) {
-      // Ensure the texture is not flipped vertically
-      logoTexture.flipY = false;
-      logoTexture.needsUpdate = true;
-      
-      // Assign the texture to the material's map
       const material = logoRef.current.material;
+
       material.map = logoTexture;
-      material.needsUpdate = true; // Ensure material updates
+      material.needsUpdate = true;
+
+      // Cleanup function to remove texture
+      return () => {
+        material.map = null;
+        material.needsUpdate = true;
+      };
     }
-  }, [logoTexture, src, selectedDesign?.backLogo]);
+  }, [logoTexture]);
 
   return (
     <group {...props} dispose={null}>
@@ -47,4 +61,5 @@ export default function LogoMesh(props) {
   );
 }
 
+// Preload the model outside the component for better performance
 useGLTF.preload('./models/logo_mesh.glb');

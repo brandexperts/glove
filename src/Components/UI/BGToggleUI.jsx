@@ -13,7 +13,7 @@ const BGToggleUI = () => {
   return (
     <div className='absolute top-2 lg:top-auto lg:top-0 right-1 lg:right-8 lg:bottom-8 flex flex-col justify-center items-center'>
       {/* Label for the toggle */}
-      <p className="mb-2 text-xl text-center font-semibold text-gray-400">Toggle Background</p>
+      <p className="mb-2  text-sm md:text-xl text-center font-semibold text-gray-400">RING ON/OFF</p>
       
       <label className="relative inline-flex items-center cursor-pointer">
    
@@ -21,7 +21,7 @@ const BGToggleUI = () => {
         <input
         checked={isChecked} 
         onChange={toggleChecked}
-        type="checkbox" className="toggle toggle-lg" />
+        type="checkbox" className="toggle toggle-md md:toggle-lg" />
       </label>
     </div>
   );

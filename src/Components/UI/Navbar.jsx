@@ -7,7 +7,7 @@ const Navbar = () => {
 <nav className='w-screen h-auto  absolute top-0 bg-transparent'
 >
 
-<div className='my-5 flex w-full justify-start lg:justify-between px-10'>
+<div className='my-5 flex w-full justify-start lg:justify-between px-5 md:px-10'>
 
 
 
@@ -27,7 +27,10 @@ const Navbar = () => {
       }
     }}
   >
-    Select Popular Designs
+
+<div className='flex  justify-center items-center gap-4'>
+  <span><img width={30} src="./color-options/popular.png" alt="" /></span>  <span className=' hidden md:block'>Popular Designs</span>
+</div>
   </button>
 </div>
 

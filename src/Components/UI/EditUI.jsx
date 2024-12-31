@@ -133,8 +133,8 @@ const EditUI = () => {
 
     {
       step: 13,
-      title: "Download Image",
-      selection: "",
+      title: "Save Your Results!",
+      selection: "You will also receive a special offer in your inbox!",
       img: "./color-options/steps/download_icon.png",
     },
   ];
@@ -147,19 +147,19 @@ const EditUI = () => {
   const colors = [
     {
       Matte: [
-        { name: "aqua", color: "aqua", isMetallic: false },
-        { name: "beige", color: "beige", isMetallic: false },
-        { name: "black", color: "black", isMetallic: false },
-        { name: "blue", color: "blue", isMetallic: false },
-        { name: "brown", color: "brown", isMetallic: false },
-        { name: "gray", color: "gray", isMetallic: false },
-        { name: "green", color: "green", isMetallic: false },
-        { name: "gold", color: "gold", isMetallic: false },
-        { name: "orange", color: "orange", isMetallic: false },
-        { name: "purple", color: "purple", isMetallic: false },
-        { name: "red", color: "red", isMetallic: false },
-        { name: "royalblue", color: "royalblue", isMetallic: false },
-        { name: "white", color: "white", isMetallic: false },
+        { name: "Aqua", color: "aqua", isMetallic: false },
+        { name: "Beige", color: "beige", isMetallic: false },
+        { name: "Black", color: "black", isMetallic: false },
+        { name: "Blue", color: "blue", isMetallic: false },
+        { name: "Brown", color: "brown", isMetallic: false },
+        { name: "Gray", color: "gray", isMetallic: false },
+        { name: "Green", color: "green", isMetallic: false },
+        { name: "Gold", color: "gold", isMetallic: false },
+        { name: "Orange", color: "orange", isMetallic: false },
+        { name: "Purple", color: "purple", isMetallic: false },
+        { name: "Red", color: "red", isMetallic: false },
+        { name: "Royal Blue", color: "royalblue", isMetallic: false },
+        { name: "White", color: "white", isMetallic: false },
       ],
       Metallic: [
         { name: "Metallic Blue", color: "#0072CE", isMetallic: true, src: "./color-options/metallic/C1.png" },
@@ -204,7 +204,7 @@ const EditUI = () => {
 
   const handleSrcClick = (logoSrc) => {
     setSrc(logoSrc); // Update Zustand state
-    console.log(logoSrc);
+    // console.log(logoSrc);
   };
 
   return (
@@ -348,14 +348,14 @@ const EditUI = () => {
             <div className=" text-slate-800 font-semibold text-lg">black</div>
             </div>
 
-            <div className=" flex flex-col justify-center items-center">
+            {/* <div className=" flex flex-col justify-center items-center">
 
 <div
             className=" w-12 h-12 border cursor-pointer bg-yellow-400 shadow-xl"
             onClick={() => handleColorClick( "gold" , false)}
             ></div>
             <div className=" text-slate-800 font-semibold text-lg">Gold</div>
-            </div>
+            </div> */}
 
 
             </div>

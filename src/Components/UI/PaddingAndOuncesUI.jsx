@@ -2,7 +2,7 @@ import React from 'react';
 import { create } from 'zustand';
 
 const useSelectionStore = create((set) => ({
-    paddingSelection: 'Premium PuLat', // Default value
+    paddingSelection: 'Dual ProLatX', // Default value
     ouncesSelection: '12 Oz', // Default value
   
     setPaddingSelection: (value) => set({ paddingSelection: value }),
@@ -26,14 +26,14 @@ const PaddingUI = () => {
 
 <img className='  w-20' src="/color-options/steps/st7.jpg" alt="" />
 
-          <span className="text-sm  text-gray-400 font-semibold">Premium PuLat</span>
+          <span className="text-sm  text-gray-400 font-semibold">Dual ProLatX</span>
 </div>
           <input
             type="radio"
             name="radio-10"
             className="radio checked:bg-blue-500"
-            defaultChecked={paddingSelection === 'Premium PuLat'}
-            onChange={() => handlePaddingChange('Premium PuLat')}
+            defaultChecked={paddingSelection === 'Dual ProLatX'}
+            onChange={() => handlePaddingChange('Dual ProLatX')}
           />
         </label>
       </div>
@@ -43,14 +43,14 @@ const PaddingUI = () => {
 
 <img className='  w-20' src="/color-options/steps/st7.jpg" alt="" />
 
-          <span className="text-sm  text-gray-400 font-semibold">Premium PuLat + Horse Hair</span>
+          <span className="text-sm  text-gray-400 font-semibold">Dual ProLatX + Horse Hair</span>
 </div>
           <input
             type="radio"
             name="radio-10"
             className="radio checked:bg-blue-500"
-            defaultChecked={paddingSelection === 'Premium PuLat + Horse Hair'}
-            onChange={() => handlePaddingChange('Premium PuLat + Horse Hair')}
+            defaultChecked={paddingSelection === 'Dual ProLatX + Horse Hair'}
+            onChange={() => handlePaddingChange('Dual ProLatX + Horse Hair')}
           />
         </label>
       </div>
