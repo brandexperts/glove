@@ -9,9 +9,9 @@ const useDesignStore = create((set) => ({
   const PopularDesignUI = () => {
 
 
-const NegroClasico = "./color-options/boxing-logos/boxing_logo.png"
-const BlancoClasico = "./color-options/boxing-logos/boxing_logo_white.png"
-const VivaMexico = "./color-options/boxing-logos/boxing_logo_color.png"
+const NegroClasico = "./color-options/boxing-logos/NegroClasico.png"
+const BlancoClasico = "./color-options/boxing-logos/BlancoClasico.png"
+const VivaMexico = "./color-options/boxing-logos/VivaMexico.png"
 
   
 

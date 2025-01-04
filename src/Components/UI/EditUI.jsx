@@ -39,7 +39,7 @@ const useMaterialStore = create((set) => ({
 }));
 
 const useFistLogo = create((set) => ({
-  src: "./color-options/boxing-logos/boxing_logo_white.png",
+  src: "./color-options/boxing-logos/BlancoClasico.png",
   setSrc: (src) => set({ src }),
 }));
 
@@ -179,15 +179,15 @@ const EditUI = () => {
   const logosContent = [
     {
       name : "Negro Clasico",
-      src : "./color-options/boxing-logos/boxing_logo.png"
+      src : "./color-options/boxing-logos/NegroClasico.png"
     },
     {
       name : "Blanco Clasico",
-      src : "./color-options/boxing-logos/boxing_logo_white.png"
+      src : "./color-options/boxing-logos/BlancoClasico.png"
     },
     {
       name : "Viva Mexico",
-      src : "./color-options/boxing-logos/boxing_logo_color.png"
+      src : "./color-options/boxing-logos/VivaMexico.png"
     },
   ]
 

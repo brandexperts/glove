@@ -11,7 +11,7 @@ export default function LogoMesh(props) {
   const steps = useConfigSteps((state) => state.steps);
 
   // Load texture using useTexture with error fallback
-  const logoTexture = useTexture(src || './color-options/boxing-logos/boxing_logo_color.png', (texture) => {
+  const logoTexture = useTexture(src || './color-options/boxing-logos/VivaMexico.png', (texture) => {
     texture.flipY = false;
     texture.needsUpdate = true;
   });

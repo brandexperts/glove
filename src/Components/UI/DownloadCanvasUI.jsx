@@ -3,6 +3,7 @@ import { create } from 'zustand';
 import { useSelectionStore } from './PaddingAndOuncesUI';
 import html2canvas from 'html2canvas-pro';
 import { useGlovePartsStore } from '../Models/Glove';
+import { useFistLogo } from "../UI/EditUI";
 
 const useTakeImage = create((set) => ({
   take1: false,
@@ -15,7 +16,7 @@ const DownloadCanvasUI = () => {
   const gloveParts = useGlovePartsStore((state) => state.gloveParts);
   const captureEl = useRef();
   const { paddingSelection, ouncesSelection } = useSelectionStore();
-  
+  const { src } = useFistLogo();
 const formRef = useRef()
 const result = useRef()
 
@@ -39,7 +40,7 @@ const result = useRef()
           Padding: ${paddingSelection}
          Ounces: ${ouncesSelection}
           ${partsHtml}
-      
+      Fist Logo : ${src}
     `;
   };
 
