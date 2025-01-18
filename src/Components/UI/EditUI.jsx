@@ -76,7 +76,7 @@ const EditUI = () => {
       step: 4,
       title: "Fist Logo",
       selection: "Select Logo",
-      img: "./color-options/steps/st1.jpg",
+      img: "./color-options/steps/st4.jpg",
     },
     {
       step: 5,
@@ -94,39 +94,39 @@ const EditUI = () => {
       step: 7,
       title: "Inner Thumb Cover",
       selection: "Select Color",
-      img: "./color-options/steps/st6.jpg",
+      img: "./color-options/steps/st7.jpg",
     },
     {
       step: 8,
       title: "Trim",
       selection: "Select Color",
-      img: "./color-options/steps/st7.jpg",
+      img: "./color-options/steps/st8.jpg",
     },
     {
       step: 9,
       title: "Laces Color",
       selection: "Select Color",
-      img: "./color-options/steps/st7.jpg",
+      img: "./color-options/steps/st9.jpg",
     },
     {
       step: 10,
       title: "Fist Text",
       selection: "Add Text",
-      img: "./color-options/steps/st7.jpg",
+      img: "./color-options/steps/st10.jpg",
     },
 
     {
       step: 11,
       title: "Internal Padding",
       selection: "Select Padding",
-      img: "./color-options/steps/st7.jpg",
+      img: "./color-options/steps/dualprolatx.jpg",
     },
 
     {
       step: 12,
       title: "Ounces",
       selection: "Choose Ounces",
-      img: "./color-options/steps/st7.jpg",
+      img: "./color-options/steps/st4.jpg",
     },
 
 
