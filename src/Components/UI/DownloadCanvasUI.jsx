@@ -17,6 +17,8 @@ const DownloadCanvasUI = () => {
   const captureEl = useRef();
   const { paddingSelection, ouncesSelection } = useSelectionStore();
   const { src } = useFistLogo();
+  const searchParams = new URLSearchParams(window.location.search);
+  const affiliate = searchParams.get('affiliate') || 'No Affiliate';
 const formRef = useRef()
 const result = useRef()
 
@@ -37,10 +39,13 @@ const result = useRef()
 
     return `
    
+Affiliate : ${affiliate}
+
           Padding: ${paddingSelection}
          Ounces: ${ouncesSelection}
           ${partsHtml}
       Fist Logo : ${src}
+
     `;
   };
 
@@ -64,6 +69,32 @@ const result = useRef()
       console.error('captureEl is not defined');
     }
   };
+
+
+
+  const getImageURL = async () => {
+    if (captureEl.current) {
+      try {
+        const canvas = await html2canvas(captureEl.current, {
+          scale: 3,
+          useCORS: true,
+        });
+        const dataURL = canvas.toDataURL('image/png');
+        console.log('Image URL:', dataURL); // You can use the URL here
+        return dataURL; // Return the URL for further use
+      } catch (err) {
+        console.error('Error capturing the canvas:', err);
+        throw err; // Rethrow the error for the caller to handle
+      }
+    } else {
+      console.error('captureEl is not defined');
+      return null;
+    }
+  };
+  
+
+
+
 
   const { setTake1, setTake2 } = useTakeImage();
   const [imageOne, setImageOne] = useState(null);
