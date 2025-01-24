@@ -8,7 +8,8 @@ const useTextConfig = create((set) => ({
   textInput: "", // Initial state for the text input
   setTextInput: (newText) => set({ textInput: newText }), // Function to update the text input
   scale: 0, // Initial scale (size)
-
+  textColor : "#FFF",
+  setTextColor: (newColor) => set({ textColor: newColor }), // Function to update the text input
 
 
   // Functions to increment and decrement scale
@@ -23,6 +24,7 @@ const TextInputUI = () => {
     setTextInput,
     increaseScale,
     decreaseScale,
+    setTextColor
   } = useTextConfig();
 
 
@@ -80,6 +82,25 @@ const [showTextUI , setShowTextUI] = useState(false)
             </div>
           </div>
         </div>
+
+
+        <div className="w-full flex flex-col gap-10  my-6">
+    
+          {/* Scale */}
+          <div className="flex justify-around items-center">
+            <div>Choose Color</div>
+            <div className="flex gap-14">
+          
+          <input type="color" 
+            onChange={(e) => setTextColor(e.target.value)} 
+          />
+          
+            </div>
+          </div>
+        </div>
+
+
+
 
 
       </div>

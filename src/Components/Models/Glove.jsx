@@ -48,7 +48,7 @@ const useGlovePartsStore = create((set) => ({
   const normalMap = useTexture("./textures/nleather5.png")
   const palmbackNormal = useTexture("./textures/nleather5.png")
   
-  const { textInput, position, scale } = useTextConfig();
+  const { textInput, position, scale, textColor } = useTextConfig();
   const steps = useConfigSteps((state) => state.steps)
   const color = useMaterialStore((state) => state.color)
   const isMetallic = useMaterialStore((state) => state.isMetallic)
@@ -336,7 +336,7 @@ const textAreaMat = useMemo(() => {
     transparent: true,  // Enable transparency
     opacity: 1.0,       // You can adjust this if you want partial transparency
   });
-}, [ textInput, position, scale]);
+}, [ textInput, textColor, scale]);
 
  
 

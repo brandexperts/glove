@@ -4,6 +4,7 @@ import { useSelectionStore } from './PaddingAndOuncesUI';
 import html2canvas from 'html2canvas-pro';
 import { useGlovePartsStore } from '../Models/Glove';
 import { useFistLogo } from "../UI/EditUI";
+import { useTextConfig } from './TextInputUI';
 
 const useTakeImage = create((set) => ({
   take1: false,
@@ -21,6 +22,12 @@ const DownloadCanvasUI = () => {
   const affiliate = searchParams.get('affiliate') || 'No Affiliate';
 const formRef = useRef()
 const result = useRef()
+
+
+  const {
+    textInput,
+  textColor
+  } = useTextConfig();
 
   const [formData, setFormData] = useState({
     name: '',
@@ -45,6 +52,9 @@ Affiliate : ${affiliate}
          Ounces: ${ouncesSelection}
           ${partsHtml}
       Fist Logo : ${src}
+
+      Text : ${textInput}
+      Text Color : ${textColor}
 
     `;
   };
@@ -188,7 +198,7 @@ Affiliate : ${affiliate}
           <input 
             type="hidden" 
             name="access_key" 
-            value="bfcdc5cc-0e88-412c-9d88-05a79a159730"
+            value="cd66d220-79b3-4cf0-9f87-d41b7576522c"
             />
             {/* value="cd66d220-79b3-4cf0-9f87-d41b7576522c" */}
 
