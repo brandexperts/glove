@@ -22,7 +22,7 @@ const DownloadCanvasUI = () => {
   const affiliate = searchParams.get('affiliate') || 'No Affiliate';
 const formRef = useRef()
 const result = useRef()
-
+const [imageURL, setImageURL] = useState();
 
   const {
     textInput,
@@ -69,6 +69,7 @@ Affiliate : ${affiliate}
           const dataURL = canvas.toDataURL('image/png');
           const link = document.createElement('a');
           link.href = dataURL;
+         
           link.download = 'captured-image.png';
           link.click();
         })
@@ -82,26 +83,7 @@ Affiliate : ${affiliate}
 
 
 
-  const getImageURL = async () => {
-    if (captureEl.current) {
-      try {
-        const canvas = await html2canvas(captureEl.current, {
-          scale: 3,
-          useCORS: true,
-        });
-        const dataURL = canvas.toDataURL('image/png');
-        console.log('Image URL:', dataURL); // You can use the URL here
-        return dataURL; // Return the URL for further use
-      } catch (err) {
-        console.error('Error capturing the canvas:', err);
-        throw err; // Rethrow the error for the caller to handle
-      }
-    } else {
-      console.error('captureEl is not defined');
-      return null;
-    }
-  };
-  
+
 
 
 
@@ -140,8 +122,12 @@ Affiliate : ${affiliate}
                       const formData = new FormData(formRef.current);
                       const object = Object.fromEntries(formData);
                       const json = JSON.stringify(object);
-                    
+                      
                       result.current.innerHTML = "Please wait...";
+                      document.getElementById("my_modal_3").showModal();
+                      download(); // Capture images after form submission
+                      formRef.current.reset(); // Reset the form
+                      setFormData({ name: "", email: "" }); // Reset local state
                     
                       fetch("https://api.web3forms.com/submit", {
                         method: "POST",
@@ -155,10 +141,6 @@ Affiliate : ${affiliate}
                           const json = await response.json();
                           if (response.status === 200) {
                             result.current.innerHTML = "Form submitted successfully!";
-                            document.getElementById("my_modal_3").showModal();
-                            download(); // Capture images after form submission
-                            formRef.current.reset(); // Reset the form
-                            setFormData({ name: "", email: "" }); // Reset local state
                           } else {
                             result.current.innerHTML = json.message || "Submission failed.";
                           }
@@ -198,14 +180,23 @@ Affiliate : ${affiliate}
           <input 
             type="hidden" 
             name="access_key" 
-            value="cd66d220-79b3-4cf0-9f87-d41b7576522c"
+            value="bfcdc5cc-0e88-412c-9d88-05a79a159730"
             />
             {/* value="cd66d220-79b3-4cf0-9f87-d41b7576522c" */}
 
              {/* Pass additional data to your webhook */}
     <input type="hidden" name="webhook_url" value="https://boxeliteclub.com/wp-json/autonami/v1/webhook/?bwfan_autonami_webhook_id=9&bwfan_autonami_webhook_key=980805621f5af66422fbe709d35a014c"/>
     
-          
+          {/* Generated Image  */}
+
+
+          {/* <input type="file" name="photo" /> */}
+
+        
+<input type="image" value={imageOne}  />
+<input type="image" value={imageTwo}  />
+
+
           {/* Hidden input with formatted HTML */}
           <input 
             type="hidden" 
