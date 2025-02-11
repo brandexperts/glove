@@ -172,7 +172,7 @@ const EditUI = () => {
         { name: "Red", color: "red", isMetallic: false },
         { name: "Royal Blue", color: "royalblue", isMetallic: false },
         { name: "White", color: "white", isMetallic: false },
-        { name: "Pink", color: "#FF6EC7", isMetallic: false },
+        { name: "Pink ", color: "#E75480", isMetallic: false },
       ],
       Metallic: [
         { name: "Metallic Blue", color: "#0072CE", isMetallic: true, src: "./color-options/metallic/C1.png" },
