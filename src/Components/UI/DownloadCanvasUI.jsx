@@ -17,7 +17,7 @@ const DownloadCanvasUI = () => {
   const gloveParts = useGlovePartsStore((state) => state.gloveParts);
   const captureEl = useRef();
   const { paddingSelection, ouncesSelection } = useSelectionStore();
-  const {closureSelection} = useClosureStore();
+const {   selectedClosure,   } = useClosureStore();
   const { src } = useFistLogo();
   const searchParams = new URLSearchParams(window.location.search);
   const affiliate = searchParams.get("affiliate") || "No Affiliate";
@@ -52,7 +52,7 @@ Affiliate : ${affiliate}
 
           Padding: ${paddingSelection}
          Ounces: ${ouncesSelection}
-         Closure System: ${closureSelection}
+         Closure System: ${selectedClosure}
           ${partsHtml}
       Fist Logo : ${src}
 

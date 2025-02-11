@@ -47,10 +47,6 @@ const useGlovePartsStore = create((set) => ({
   const {   selectedClosure,   } = useClosureStore();
 
 
-  useEffect(()=>{
-console.log(selectedClosure)
-  } , [selectedClosure])
-
 
   
   const normalMap = useTexture("./textures/nleather5.png")
