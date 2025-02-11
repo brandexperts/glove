@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef } from 'react'
 import { useGLTF, useTexture } from '@react-three/drei'
 import { Color, MeshStandardMaterial } from 'three';
 import { create } from 'zustand';
-import { useMaterialStore, useConfigSteps } from "../UI/EditUI"
+import { useMaterialStore, useConfigSteps, useClosureStore } from "../UI/EditUI"
 import * as THREE from "three"
 import { useTextConfig } from '../UI/TextInputUI';
 import { useDesignStore } from '../UI/PopularDesignUI';
@@ -40,10 +40,18 @@ const useGlovePartsStore = create((set) => ({
 
   function Glove(props) {
   const { nodes, materials } = useGLTF('./models/glove_text_test-v2.glb')
+  const {  nodes: velcroNodes } = useGLTF('./models/velcro_mesh.glb')
 
 
   const {selectedDesign} = useDesignStore()
-  
+  const {   selectedClosure,   } = useClosureStore();
+
+
+  useEffect(()=>{
+console.log(selectedClosure)
+  } , [selectedClosure])
+
+
   
   const normalMap = useTexture("./textures/nleather5.png")
   const palmbackNormal = useTexture("./textures/nleather5.png")
@@ -403,6 +411,22 @@ const thumbConnectMat = useMemo(() => {
       >
         
       </mesh>
+
+
+{/* Strap  */}
+
+<mesh
+        castShadow
+        receiveShadow
+        visible={selectedClosure === "laces" ? false : true}
+        geometry={velcroNodes.strap.geometry}
+        material={wristbackMat}
+        position={[0.689, -1.028, 0.066]}
+        rotation={[0, 0, -Math.PI / 2]}
+      />
+
+
+
       <mesh
         castShadow
         receiveShadow
@@ -425,7 +449,7 @@ const thumbConnectMat = useMemo(() => {
       <mesh
         castShadow
         receiveShadow
-        geometry={nodes.piping.geometry}
+        geometry={selectedClosure === "laces" ? nodes.piping.geometry : velcroNodes.piping.geometry}
         material={trimMat}
         ref={trimRef}
         position={[0.002, -0.601, 0.1]}
@@ -445,13 +469,17 @@ const thumbConnectMat = useMemo(() => {
         position={[0, 0, 0.209]}
       />
       <group position={[0, 0.097, 0.173]}>
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Mesh_15.geometry}
-          ref={PalmWristRef}
-          material={PalmWristMat}
-        />
+      <mesh
+  castShadow
+  receiveShadow
+  geometry={selectedClosure === "laces" ? nodes.Mesh_15.geometry : velcroNodes.palm.geometry}
+  ref={PalmWristRef}
+  material={PalmWristMat}
+/>
+
+
+
+
         <mesh
           castShadow
           receiveShadow
@@ -490,12 +518,14 @@ const thumbConnectMat = useMemo(() => {
         receiveShadow
         geometry={nodes.Lace_left.geometry}
         material={lacesMat}
+        visible={selectedClosure === "laces" ? true : false}
         ref={lacesRef}
         position={[0.01, -0.76, -0.201]}
       />
       <mesh
         castShadow
         receiveShadow
+        visible={selectedClosure === "laces" ? true : false}
         geometry={nodes.Lace_right.geometry}
         material={lacesMat}
         position={[0.01, -0.76, -0.201]}
@@ -508,7 +538,7 @@ const thumbConnectMat = useMemo(() => {
         geometry={nodes.madeforchampions.geometry}
         material={materials.Champ}
         ref={MadeForChampionsRef}
-        position={[0.008, -0.942, 0.559]}
+        position={ selectedClosure === "laces" ?  [0.008, -0.942, 0.559] : [0.008, -0.958, 0.59]}
         rotation={[Math.PI / 2, 0, 0]}
         scale={0.564}
       />
@@ -517,7 +547,7 @@ const thumbConnectMat = useMemo(() => {
         receiveShadow
         geometry={nodes.Plane001.geometry}
         material={materials.Flag}
-        position={[0.018, -1.431, 0.373]}
+        position={ selectedClosure === "laces" ?  [0.018, -1.431, 0.373] : [0.018, -1.422, 0.416]}
         rotation={[Math.PI / 2, 0, 0]}
         scale={0.786}
       />
@@ -526,7 +556,7 @@ const thumbConnectMat = useMemo(() => {
         receiveShadow
         geometry={nodes.Plane006.geometry}
         material={materials['HECHO EN MEXICO']}
-        position={[0.018, -1.431, 0.363]}
+        position={selectedClosure === "laces" ?  [0.018, -1.431, 0.373] : [0.018, -1.422, 0.39]}
         rotation={[Math.PI / 2, 0, 0]}
         scale={[0.334, 0.648, 0.067]}
       />
@@ -539,11 +569,15 @@ const thumbConnectMat = useMemo(() => {
         position={[0, 0.141, 0.178]}
       />
 
+
+
+
     </group>
   )
 }
 
 useGLTF.preload('./models/glove_text_test-v2.glb')
+useGLTF.preload('./models/velcro_mesh.glb')
 
 
 export {Glove , useGlovePartsStore}

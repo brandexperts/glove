@@ -44,6 +44,12 @@ const useFistLogo = create((set) => ({
 }));
 
 
+const useClosureStore = create((set) => ({
+  selectedClosure: "velcro", // Default closure type
+  setSelectedClosure: (closure) => set({ selectedClosure: closure }),
+}));
+
+
 
 const EditUI = () => {
   const [isMetallic, setIsMetallic] = useState(true); // Toggle Metallic/Matte
@@ -51,6 +57,11 @@ const EditUI = () => {
   const steps = useConfigSteps((state) => state.steps);
   const increaseSteps = useConfigSteps((state) => state.increaseSteps);
   const { setColor, setMetallic } = useMaterialStore();
+  const { 
+    selectedClosure,  
+    setSelectedClosure, 
+  } = useClosureStore();
+
 
 
   const content = [
@@ -195,7 +206,9 @@ const EditUI = () => {
 
 
 
-
+  const handleClosureClick = (closure) => {
+    setSelectedClosure(closure);
+  };
 
 
   const handleColorClick = (color, isMetallic) => {
@@ -331,34 +344,58 @@ const EditUI = () => {
 
 <div className=" flex w-full justify-around my-10">
 
-<div className=" flex flex-col justify-center items-center">
+<div className="p-6 w-full mx-auto">
+      {/* Closure Type Selection */}
+      <div className="flex w-full justify-around ">
+        <div className="flex flex-col items-center">
+          <button
+            onClick={() => handleClosureClick('laces')}
+            className={`px-6 py-3 rounded-lg font-semibold ${
+              selectedClosure === 'laces'
+                ? 'bg-blue-500 text-white'
+                : 'bg-gray-200 text-gray-800'
+            }`}
+          >
+            Laces
+          </button>
+        </div>
+        <div className="flex flex-col items-center">
+          <button
+            onClick={() => handleClosureClick('velcro')}
+            className={`px-6 py-3 rounded-lg font-semibold ${
+              selectedClosure === 'velcro'
+                ? 'bg-blue-500 text-white'
+                : 'bg-gray-200 text-gray-800'
+            }`}
+          >
+            Velcro
+          </button>
+        </div>
+      </div>
 
-<div
-            className=" w-12 h-12 border cursor-pointer bg-slate-100 shadow-xl"
-            onClick={() => handleColorClick( "white" , false)}
+      {/* Show color options only if laces is selected */}
+      {selectedClosure === 'laces' && (
+        <div className="flex w-full justify-around my-10">
+          <div className="flex flex-col justify-center items-center">
+            <div
+              className="w-12 h-12 border cursor-pointer bg-slate-100 shadow-xl"
+              onClick={() => handleColorClick('white')}
             ></div>
-            <div className=" text-slate-800 font-semibold text-lg">White</div>
-            </div>
+            <div className="text-slate-800 font-semibold text-lg">White</div>
+          </div>
 
-
-            <div className=" flex flex-col justify-center items-center">
-
-<div
-            className=" w-12 h-12 border cursor-pointer bg-gray-900 shadow-xl"
-            onClick={() => handleColorClick( "black" , false)}
+          <div className="flex flex-col justify-center items-center">
+            <div
+              className="w-12 h-12 border cursor-pointer bg-gray-900 shadow-xl"
+              onClick={() => handleColorClick('black')}
             ></div>
-            <div className=" text-slate-800 font-semibold text-lg">black</div>
-            </div>
+            <div className="text-slate-800 font-semibold text-lg">Black</div>
+          </div>
+        </div>
+      )}
 
-            {/* <div className=" flex flex-col justify-center items-center">
-
-<div
-            className=" w-12 h-12 border cursor-pointer bg-yellow-400 shadow-xl"
-            onClick={() => handleColorClick( "gold" , false)}
-            ></div>
-            <div className=" text-slate-800 font-semibold text-lg">Gold</div>
-            </div> */}
-
+  
+    </div>
 
             </div>
           }
@@ -391,4 +428,4 @@ const EditUI = () => {
   );
 };
 
-export {EditUI , useMaterialStore , useConfigSteps, useFistLogo}
+export {EditUI , useMaterialStore , useConfigSteps, useFistLogo , useClosureStore}
