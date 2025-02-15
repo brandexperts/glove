@@ -45,7 +45,7 @@ const useFistLogo = create((set) => ({
 
 
 const useClosureStore = create((set) => ({
-  selectedClosure: "velcro", // Default closure type
+  selectedClosure: "laces", // Default closure type
   setSelectedClosure: (closure) => set({ selectedClosure: closure }),
 }));
 
