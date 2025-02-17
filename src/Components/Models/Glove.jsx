@@ -72,22 +72,24 @@ const useGlovePartsStore = create((set) => ({
   const MadeForChampionsRef = useRef()
   
   const colorToName = (color, isMetallic) => {
-    // Define the color mappings
+    // Define the color mappings with hex values for consistency
     const colorMappings = {
       Matte: [
-        { name: "Aqua", color: "aqua" },
-        { name: "Beige", color: "beige" },
-        { name: "Black", color: "black" },
-        { name: "Blue", color: "blue" },
-        { name: "Brown", color: "brown" },
-        { name: "Gray", color: "gray" },
-        { name: "Green", color: "green" },
-        { name: "Gold", color: "gold" },
-        { name: "Orange", color: "orange" },
-        { name: "Purple", color: "purple" },
-        { name: "Red", color: "red" },
-        { name: "Royal Blue", color: "royalblue" },
-        { name: "White", color: "white" }
+        { name: "Aqua", color: "#00FFFF" },
+        { name: "Beige", color: "#F5F5DC" },
+        { name: "Black", color: "#000000" },
+        { name: "Blue", color: "#0000FF" },
+        { name: "Brown", color: "#964B00" },
+        { name: "Gray", color: "#808080" },
+        { name: "Green", color: "#008000" },
+        { name: "Yellow", color: "#FDEA0B" },
+        { name: "Orange", color: "#FF8400" },
+        { name: "Purple", color: "#800080" },
+        { name: "Light Purple", color: "#CEAEF3" },
+        { name: "Red", color: "#FF0000" },
+        { name: "Royal Blue", color: "#4169E1" },
+        { name: "White", color: "#FFFFFF" },
+        { name: "Pink", color: "#E75480" }
       ],
       Metallic: [
         { name: "Metallic Blue", color: "#0072CE" },
@@ -102,43 +104,81 @@ const useGlovePartsStore = create((set) => ({
       ]
     };
   
-    // Convert the input color to a string
-    let colorString = '';
-    
-    // Handle THREE.Color objects
-    if (color && typeof color.getHexString === 'function') {
-      // For matte colors, convert hex to standard color name
-      if (!isMetallic) {
-        // Get basic color value from hex
-        const hex = '#' + color.getHexString();
-        // Match with nearest basic color
-        return findClosestBasicColor(hex, colorMappings.Matte);
-      } else {
-        colorString = '#' + color.getHexString();
+    // Helper function to convert color to hex
+    const toHex = (color) => {
+      if (!color) return null;
+      
+      // Handle THREE.Color objects
+      if (typeof color.getHexString === 'function') {
+        return '#' + color.getHexString().toUpperCase();
       }
-    }
-    // Handle hex strings
-    else if (typeof color === 'string') {
-      colorString = color;
-    }
-    // Handle other cases
-    else if (color && color.color) {
-      colorString = color.color;
-    }
-    else {
-      return "Unknown Color";
-    }
+      
+      // Handle hex strings
+      if (typeof color === 'string') {
+        // Ensure proper hex format
+        const hex = color.startsWith('#') ? color : `#${color}`;
+        return hex.toUpperCase();
+      }
+      
+      // Handle object with color property
+      if (color.color) {
+        return toHex(color.color);
+      }
+      
+      return null;
+    };
   
-    // Determine which color set to use
+    // Helper function to calculate color difference
+    const getColorDifference = (hex1, hex2) => {
+      // Convert hex to RGB
+      const getRGB = (hex) => {
+        const r = parseInt(hex.slice(1, 3), 16);
+        const g = parseInt(hex.slice(3, 5), 16);
+        const b = parseInt(hex.slice(5, 7), 16);
+        return [r, g, b];
+      };
+  
+      const [r1, g1, b1] = getRGB(hex1);
+      const [r2, g2, b2] = getRGB(hex2);
+  
+      // Calculate Euclidean distance
+      return Math.sqrt(
+        Math.pow(r2 - r1, 2) +
+        Math.pow(g2 - g1, 2) +
+        Math.pow(b2 - b1, 2)
+      );
+    };
+  
+    // Find the closest matching color
+    const findClosestColor = (targetHex, colorSet) => {
+      let closestColor = null;
+      let minDifference = Infinity;
+  
+      colorSet.forEach(c => {
+        const difference = getColorDifference(targetHex, c.color);
+        if (difference < minDifference) {
+          minDifference = difference;
+          closestColor = c;
+        }
+      });
+  
+      return closestColor;
+    };
+  
+    // Main color matching logic
+    const hexColor = toHex(color);
+    if (!hexColor) return "Unknown Color";
+  
     const colorSet = isMetallic ? colorMappings.Metallic : colorMappings.Matte;
-  
-    // Find the matching color
-    const matchingColor = colorSet.find(c => 
-      c.color.toLowerCase() === colorString.toLowerCase()
-    );
+    const matchingColor = findClosestColor(hexColor, colorSet);
   
     return matchingColor ? matchingColor.name : "Unknown Color";
   };
+  
+  // Example usage:
+  // const color = new THREE.Color(0xFF0000);
+  // console.log(colorToName(color, false)); // "Red"
+  // console.log(colorToName("#0072CE", true)); // "Metallic Blue"
   
   // Helper function to find the closest basic color
   function findClosestBasicColor(hex, matteColors) {
