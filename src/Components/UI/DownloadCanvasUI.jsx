@@ -199,7 +199,7 @@ Affiliate : ${affiliate}
 
           {/* CC Email  */}
 
-          <input type="hidden" name="ccemail" value="af164021.lancer@gmail.com" />
+          {/* <input type="hidden" name="ccemail" value="af164021.lancer@gmail.com" /> */}
 
           {/* Generated Image  */}
 
