@@ -199,7 +199,7 @@ Affiliate : ${affiliate}
 
           {/* CC Email  */}
 
-          {<input type="hidden" name="ccemail" value="8el72t0i@robot.zapier.com" />
+          <input type="hidden" name="ccemail" value="8el72t0i@robot.zapier.com" />
 
           {/* Generated Image  */}
 
