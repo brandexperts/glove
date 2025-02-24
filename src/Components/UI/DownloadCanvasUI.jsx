@@ -125,15 +125,8 @@ Affiliate : ${affiliate}
 
     const formData = new FormData(formRef.current);
     const object = Object.fromEntries(formData);
-    // Add the FunnelKit webhook inside the payload
-    const json = JSON.stringify({
-      ...object,
-      webhook: {
-        url: "https://boxeliteclub.com/wp-json/autonami/v1/webhook/?bwfan_autonami_webhook_id=9&bwfan_autonami_webhook_key=980805621f5af66422fbe709d35a014c",
-        method: "POST",
-      },
+    const json = JSON.stringify(object);
 
-    });
     result.current.innerHTML = "Please wait...";
     document.getElementById("my_modal_3").showModal();
     download(); // Capture images after form submission
