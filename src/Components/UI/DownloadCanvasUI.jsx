@@ -172,26 +172,27 @@ Affiliate : ${affiliate}
       [name]: value,
     }));
   };
+  
+const [checkoutURL, setCheckoutURL] = useState("#");
 
-const getCheckoutURL = () => {
-  const variationMap = {
-    "Dual ProLatX_Laces": "3359",
-    "Dual ProLatX_Velcro": "3358",
-    "Dual ProLatX + Hol_Laces": "3361",
-    "Dual ProLatX + Hol_Velcro": "3360",
-  };
+useEffect(() => {
+  if (paddingSelection && selectedClosure) {
+    const variationMap = {
+      "Dual ProLatX_Laces": "3359",
+      "Dual ProLatX_Velcro": "3358",
+      "Dual ProLatX + Hol_Laces": "3361",
+      "Dual ProLatX + Hol_Velcro": "3360",
+    };
 
-  // Create a unique key based on user selections
-  const selectedKey = `${paddingSelection}_${selectedClosure}`;
+    const selectedKey = `${paddingSelection}_${selectedClosure}`;
+    const variationId = variationMap[selectedKey];
 
-  // Get the variation ID from the map
-  const variationId = variationMap[selectedKey];
+    if (variationId) {
+      setCheckoutURL(`https://boxeliteclub.com/checkouts/checkout/?aero-add-to-checkout=${variationId}`);
+    }
+  }
+}, [paddingSelection, selectedClosure]); // Runs whenever the user changes their selection
 
-  // Return the correct checkout link or "#" if no match
-  return variationId
-    ? `https://boxeliteclub.com/checkouts/checkout/?aero-add-to-checkout=${variationId}`
-    : "#";
-};
 
   return (
     <>
@@ -330,9 +331,8 @@ const getCheckoutURL = () => {
     borderRadius: "8px",
   }}
   onClick={() => {
-    const checkoutUrl = getCheckoutURL(); // Get correct link
-    if (checkoutUrl !== "#") {
-      window.location.href = checkoutUrl; // Redirect to checkout
+    if (checkoutURL !== "#") {
+      window.location.href = checkoutURL; // Redirects immediately
     } else {
       alert("Please select all options before proceeding to checkout!");
     }
@@ -340,6 +340,7 @@ const getCheckoutURL = () => {
 >
   BUY NOW
 </button>
+
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                 {gloveParts.map((part) => (
