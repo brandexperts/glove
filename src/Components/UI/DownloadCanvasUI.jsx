@@ -173,6 +173,26 @@ Affiliate : ${affiliate}
     }));
   };
 
+  const getCheckoutURL = () => {
+  let variationId;
+
+  // Match user's selection to the correct variation ID
+  if (selectedClosure === "Velcro" && paddingSelection === "Dual ProLatX") {
+    variationId = "3358";
+  } else if (selectedClosure === "Laces" && paddingSelection === "Dual ProLatX") {
+    variationId = "3359";
+  } else if (selectedClosure === "Velcro" && paddingSelection === "Dual ProLatX + Hol") {
+    variationId = "3360";
+  } else if (selectedClosure === "Laces" && paddingSelection === "Dual ProLatX + Hol") {
+    variationId = "3361";
+  }
+
+  return variationId 
+    ? `https://boxeliteclub.com/checkouts/checkout/?aero-add-to-checkout=${variationId}`
+    : "#"; // Default to "#" if no selection
+};
+
+
   return (
     <>
       <div className="w-full flex justify-center items-center flex-col">
