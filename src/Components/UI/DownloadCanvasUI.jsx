@@ -173,25 +173,25 @@ Affiliate : ${affiliate}
     }));
   };
 
-  const getCheckoutURL = () => {
-  let variationId;
+const getCheckoutURL = () => {
+  const variationMap = {
+    "Dual ProLatX_Laces": "3359",
+    "Dual ProLatX_Velcro": "3358",
+    "Dual ProLatX + Hol_Laces": "3361",
+    "Dual ProLatX + Hol_Velcro": "3360",
+  };
 
-  // Match user's selection to the correct variation ID
-  if (selectedClosure === "Velcro" && paddingSelection === "Dual ProLatX") {
-    variationId = "3358";
-  } else if (selectedClosure === "Laces" && paddingSelection === "Dual ProLatX") {
-    variationId = "3359";
-  } else if (selectedClosure === "Velcro" && paddingSelection === "Dual ProLatX + Hol") {
-    variationId = "3360";
-  } else if (selectedClosure === "Laces" && paddingSelection === "Dual ProLatX + Hol") {
-    variationId = "3361";
-  }
+  // Create a unique key based on user selections
+  const selectedKey = `${paddingSelection}_${selectedClosure}`;
 
-  return variationId 
+  // Get the variation ID from the map
+  const variationId = variationMap[selectedKey];
+
+  // Return the correct checkout link or "#" if no match
+  return variationId
     ? `https://boxeliteclub.com/checkouts/checkout/?aero-add-to-checkout=${variationId}`
-    : "#"; // Default to "#" if no selection
+    : "#";
 };
-
 
   return (
     <>
@@ -319,7 +319,7 @@ Affiliate : ${affiliate}
               </h2>
                 {/* SHOP ////////// */}
 
-     <button
+<button
   className="btn my-3 w-full"
   style={{
     backgroundColor: "#28a745", // Green button
@@ -330,7 +330,7 @@ Affiliate : ${affiliate}
     borderRadius: "8px",
   }}
   onClick={() => {
-    const checkoutUrl = getCheckoutURL(); // Get the correct URL based on selection
+    const checkoutUrl = getCheckoutURL(); // Get correct link
     if (checkoutUrl !== "#") {
       window.location.href = checkoutUrl; // Redirect to checkout
     } else {
