@@ -294,9 +294,32 @@ Affiliate : ${affiliate}
             </div>
 
             <div className="p-4 bg-gray-100 rounded-md shadow-sm">
-              <h2 className="text-lg font-bold text-gray-800 mb-4 text-center">
+              <h2 className="text-lg font-bold text-gray-800 my-2 text-center">
                 Glove Customization Details
               </h2>
+
+              <button
+  class="btn btn-active btn-success text-white font-semibold text-xl my-3 w-full"
+  onClick={() => {
+    if (paddingSelection === "Dual ProLatX" && selectedClosure === "laces") {
+      window.location.href =
+        "https://boxeliteclub.com/checkouts/checkout/?aero-add-to-checkout=3359";
+    } else if (paddingSelection === "Dual ProLatX" && selectedClosure === "velcro") {
+      window.location.href =
+        "https://boxeliteclub.com/checkouts/checkout/?aero-add-to-checkout=3358";
+    } else if (paddingSelection === "Dual ProLatX + Horse Hair" && selectedClosure === "laces") {
+      window.location.href =
+        "https://boxeliteclub.com/checkouts/checkout/?aero-add-to-checkout=3361";
+    } else if (paddingSelection === "Dual ProLatX + Horse Hair" && selectedClosure === "velcro") {
+      window.location.href =
+        "https://boxeliteclub.com/checkouts/checkout/?aero-add-to-checkout=3360";
+    }
+  }}
+>
+  Order Now
+</button>
+
+
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                 {gloveParts.map((part) => (
                   <div
