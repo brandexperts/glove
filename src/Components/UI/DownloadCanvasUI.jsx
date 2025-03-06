@@ -133,36 +133,36 @@ Affiliate : ${affiliate}
     formRef.current.reset(); // Reset the form
     setFormData({ name: "", email: "" }); // Reset local state
 
-    fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: json,
-    })
-      .then(async (response) => {
-        const json = await response.json();
-        if (response.status === 200) {
-          result.current.innerHTML = "Form submitted successfully!";
+    // fetch("https://api.web3forms.com/submit", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Accept: "application/json",
+    //   },
+    //   body: json,
+    // })
+    //   .then(async (response) => {
+    //     const json = await response.json();
+    //     if (response.status === 200) {
+    //       result.current.innerHTML = "Form submitted successfully!";
 
-          console.log(imageOne, imageTwo);
-        } else {
-          result.current.innerHTML = json.message || "Submission failed.";
-        }
-      })
-      .catch((error) => {
-        console.error("Error submitting the form:", error);
-        result.current.innerHTML = "Something went wrong!";
-      })
-      .finally(() => {
-        // Clear result message after some time
-        setTimeout(() => {
-          if (result.current) {
-            result.current.innerHTML = "";
-          }
-        }, 3000);
-      });
+    //       console.log(imageOne, imageTwo);
+    //     } else {
+    //       result.current.innerHTML = json.message || "Submission failed.";
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error submitting the form:", error);
+    //     result.current.innerHTML = "Something went wrong!";
+    //   })
+    //   .finally(() => {
+    //     // Clear result message after some time
+    //     setTimeout(() => {
+    //       if (result.current) {
+    //         result.current.innerHTML = "";
+    //       }
+    //     }, 3000);
+    //   });
   };
 
   const handleInputChange = (e) => {
@@ -301,23 +301,26 @@ Affiliate : ${affiliate}
               <button
   class="btn btn-active btn-success text-white font-semibold text-xl my-3 w-full"
   onClick={() => {
+    let url = "";
+
     if (paddingSelection === "Dual ProLatX" && selectedClosure === "laces") {
-      window.location.href =
-        "https://boxeliteclub.com/checkouts/checkout/?aero-add-to-checkout=3359";
+      url = "https://boxeliteclub.com/checkouts/checkout/?aero-add-to-checkout=3359";
     } else if (paddingSelection === "Dual ProLatX" && selectedClosure === "velcro") {
-      window.location.href =
-        "https://boxeliteclub.com/checkouts/checkout/?aero-add-to-checkout=3358";
+      url = "https://boxeliteclub.com/checkouts/checkout/?aero-add-to-checkout=3358";
     } else if (paddingSelection === "Dual ProLatX + Horse Hair" && selectedClosure === "laces") {
-      window.location.href =
-        "https://boxeliteclub.com/checkouts/checkout/?aero-add-to-checkout=3361";
+      url = "https://boxeliteclub.com/checkouts/checkout/?aero-add-to-checkout=3361";
     } else if (paddingSelection === "Dual ProLatX + Horse Hair" && selectedClosure === "velcro") {
-      window.location.href =
-        "https://boxeliteclub.com/checkouts/checkout/?aero-add-to-checkout=3360";
+      url = "https://boxeliteclub.com/checkouts/checkout/?aero-add-to-checkout=3360";
+    }
+
+    if (url) {
+      window.open(url, "_blank");
     }
   }}
 >
   Order Now
 </button>
+
 
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
