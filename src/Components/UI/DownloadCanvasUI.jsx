@@ -304,13 +304,13 @@ Affiliate : ${affiliate}
     let url = "";
 
     if (paddingSelection === "Dual ProLatX" && selectedClosure === "laces") {
-      url = "https://boxeliteclub.com/checkouts/checkout/?aero-add-to-checkout=3359";
+      url = "https://boxeliteclub.com/checkouts/checkout/?aero-add-to-checkout=3359&aero-coupons=3dglove";
     } else if (paddingSelection === "Dual ProLatX" && selectedClosure === "velcro") {
-      url = "https://boxeliteclub.com/checkouts/checkout/?aero-add-to-checkout=3358";
+      url = "https://boxeliteclub.com/checkouts/checkout/?aero-add-to-checkout=3358&aero-coupons=3dglove";
     } else if (paddingSelection === "Dual ProLatX + Horse Hair" && selectedClosure === "laces") {
-      url = "https://boxeliteclub.com/checkouts/checkout/?aero-add-to-checkout=3361";
+      url = "https://boxeliteclub.com/checkouts/checkout/?aero-add-to-checkout=3361&aero-coupons=3dglove";
     } else if (paddingSelection === "Dual ProLatX + Horse Hair" && selectedClosure === "velcro") {
-      url = "https://boxeliteclub.com/checkouts/checkout/?aero-add-to-checkout=3360";
+      url = "https://boxeliteclub.com/checkouts/checkout/?aero-add-to-checkout=3360&aero-coupons=3dglove";
     }
 
     if (url) {
