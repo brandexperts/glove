@@ -295,7 +295,7 @@ Affiliate : ${affiliate}
 
             <div className="p-4 bg-gray-100 rounded-md shadow-sm">
               <h2 className="text-lg font-bold text-gray-800 my-2 text-center">
-                Get Your Personalized Glove 👇
+                Get Your Personalized Glove with 15% OFF - ONLY NOW 👇
               </h2>
 
               <button
