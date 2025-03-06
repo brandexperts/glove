@@ -133,36 +133,36 @@ Affiliate : ${affiliate}
     formRef.current.reset(); // Reset the form
     setFormData({ name: "", email: "" }); // Reset local state
 
-    // fetch("https://api.web3forms.com/submit", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Accept: "application/json",
-    //   },
-    //   body: json,
-    // })
-    //   .then(async (response) => {
-    //     const json = await response.json();
-    //     if (response.status === 200) {
-    //       result.current.innerHTML = "Form submitted successfully!";
+    fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: json,
+    })
+      .then(async (response) => {
+        const json = await response.json();
+        if (response.status === 200) {
+          result.current.innerHTML = "Form submitted successfully!";
 
-    //       console.log(imageOne, imageTwo);
-    //     } else {
-    //       result.current.innerHTML = json.message || "Submission failed.";
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error submitting the form:", error);
-    //     result.current.innerHTML = "Something went wrong!";
-    //   })
-    //   .finally(() => {
-    //     // Clear result message after some time
-    //     setTimeout(() => {
-    //       if (result.current) {
-    //         result.current.innerHTML = "";
-    //       }
-    //     }, 3000);
-    //   });
+          console.log(imageOne, imageTwo);
+        } else {
+          result.current.innerHTML = json.message || "Submission failed.";
+        }
+      })
+      .catch((error) => {
+        console.error("Error submitting the form:", error);
+        result.current.innerHTML = "Something went wrong!";
+      })
+      .finally(() => {
+        // Clear result message after some time
+        setTimeout(() => {
+          if (result.current) {
+            result.current.innerHTML = "";
+          }
+        }, 3000);
+      });
   };
 
   const handleInputChange = (e) => {
