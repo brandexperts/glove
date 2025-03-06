@@ -260,7 +260,7 @@ Affiliate : ${affiliate}
             className={`btn ${!isFormValid ? "btn-disabled opacity-50" : ""}`}
             type="submit"
           >
-            SAVE RESULTS!
+            Save & Continue!
           </button>
 
           <div ref={result} className=" font-bold text-green-400 text-lg"></div>
@@ -295,7 +295,7 @@ Affiliate : ${affiliate}
 
             <div className="p-4 bg-gray-100 rounded-md shadow-sm">
               <h2 className="text-lg font-bold text-gray-800 my-2 text-center">
-                Glove Customization Details
+                Get Your Personalized Glove 👇
               </h2>
 
               <button
